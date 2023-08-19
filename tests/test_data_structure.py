@@ -1,4 +1,4 @@
-from data_structure.linked_lists import LinkedList
+from data_structure.test_linked_lists import LinkedList
 
 
 def test_linked_list_create():
