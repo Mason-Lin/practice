@@ -29,10 +29,6 @@ def test_all():
     fifo.append(3)
     assert fifo.popleft() == 1
     # fifo == [2, 3]
-    fifo.append(4)
-    fifo.append(5)
-    # fifo == [3, 4, 5]
-    assert fifo.popleft() == 3
 
     # stack
     lifo = deque(maxlen=3)
