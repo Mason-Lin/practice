@@ -1,7 +1,8 @@
 """dict is hash table already."""
 import pytest
 
-UNUSED = (None, None)
+UNUSED = None
+EMPTY = (None, None)
 
 
 class HashTable:
@@ -14,25 +15,35 @@ class HashTable:
             if self.table[index] is UNUSED:
                 self.table[index] = (key, value)
                 return
+
+            if self.table[index] is EMPTY:
+                continue
+
+            if self.table[index][0] == key:
+                self.table[index][1] == value
+                return
+
         raise IndexError("Hash table is full")
 
     def get(self, key, default=None):
         for index in self._hash_generator(key):
             if self.table[index] is UNUSED:
+                raise IndexError("key not found")
+
+            if self.table[index] is EMPTY:
                 continue
 
             if self.table[index][0] == key:
                 return self.table[index][1]
-
         return default
 
     def _hash_generator(self, index):
         start = hash(index) % self.size
         yield start
-        probe = (5 * hash(index) + 1) % self.size
+        probe = (5 * start + 1) % self.size
         while probe != start:
-            probe = (5 * probe + 1) % self.size
             yield probe
+            probe = (5 * probe + 1) % self.size
         raise IndexError("Hash table is full")
 
 
@@ -45,3 +56,14 @@ def test_all():
 
     with pytest.raises(IndexError):
         h.put("c", 3)
+
+
+def test_hash():
+    h = HashTable(8)
+    for i in range(8):
+        h.put(i, i)
+    for i in range(8):
+        assert h.get(i) == i
+
+    with pytest.raises(IndexError):
+        h.put(9, 9)
