@@ -1,66 +1,59 @@
 """[Python] Powerful Ultimate Binary Search Template. Solved many problems."""
-# https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems.
 
 
-# Most Generalized Binary Search
-def binary_search(array, target) -> int:
-    left, right = min(array), max(array)  # could be [0, n], [1, n] etc. Depends on problem
+def basic_binary_search(arr, t):
+    l, r = 0, len(arr) - 1
 
-    def condition(mid) -> bool:
-        if array[mid] > target:
-            return True
-        return False
-
-    while left < right:
-        mid = left + (right - left) // 2
-        if condition(mid):
-            right = mid
-        else:
-            left = mid + 1
-    return left
-
-
-# when miss
-def binary_search_with_miss(array, target) -> int:
-    left, right = min(array), max(array)  # could be [0, n], [1, n] etc. Depends on problem
-
-    def condition(mid) -> bool:
-        if array[mid] > target:
-            return True
-        return False
-
-    while left < right:
-        mid = (left + right) >> 1
-        if condition(mid):
-            right = mid - 1
-        else:
-            left = mid + 1
-    return left if array[left] == target else -1
-
-
-# It returns location of x in given array arr
-def binarySearch(arr, l, r, x):
- 
     while l <= r:
- 
         mid = l + (r - l) // 2
- 
-        # Check if x is present at mid
-        if arr[mid] == x:
+
+        if arr[mid] == t:
             return mid
- 
-        # If x is greater, ignore left half
-        elif arr[mid] < x:
-            l = mid + 1
- 
-        # If x is smaller, ignore right half
-        else:
+
+        if arr[mid] > t:
             r = mid - 1
- 
-    # If we reach here, then the element
-    # was not present
+        else:
+            l = mid + 1
     return -1
- 
+
+
+# https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems.
+# while(lo < hi) {
+#   int mid = lo + (hi - lo) / 2;
+#   if(Special condition passed)(optional):
+#       return mid;
+#   if(condition passed)
+#       hi = mid;
+#   else
+#       lo = mid + 1;
+# }
+# return lo;
+def adv_binary_search(arr, t) -> int:
+    l, r = 0, len(arr) - 1
+
+    def condition(mid) -> bool:
+        if arr[mid] > t:
+            return True
+        return False
+
+    while l < r:
+        mid = l + (r - l) // 2
+
+        # optional, exactly match
+        if arr[mid] == t:
+            return mid
+
+        if condition(mid):
+            r = mid
+        else:
+            l = mid + 1
+
+    # optional, check if left boundary is the target
+    if arr[l] != t:
+        return -1
+
+    return l
+
 
 # Tips:
 # Correctly initialize the boundary variables left and right to specify search space. Only one rule: set up the boundary to include all possible elements;
@@ -71,19 +64,17 @@ def binarySearch(arr, l, r, x):
 # If we can discover some kind of monotonicity, for example, if condition(k) is True then condition(k + 1) is True, then we can consider binary search.
 
 
-def test_all():
-    # search_space = [1, 2, 3, 4, 4, 4, 5, 6, 7]
-    search_space = [1, 2, 3, 4, 4, 4, 6, 7, 8]
-    #                        ^        ^
-    #                        |        |
-    target = 5
-    # assert bisect_left(search_space, target) == 3
+def test_hit_or_miss():
+    search_space = [1, 2, 3, 4, 6, 7, 8, 9, 10]
+    #                        ^
+    assert basic_binary_search(search_space, 4) == 3
+    assert basic_binary_search(search_space, 5) == -1
+    assert basic_binary_search(search_space, 6) == 4
 
-    # assert bisect_right(search_space, target) == 6
-    # assert binary_search(search_space, target) == 6
-    # assert binary_search_with_miss(search_space, target) == 6
 
-    # assert bisect_left(search_space, target) == -1
-    # assert bisect_right(search_space, target) == -1
-    # assert binary_search(search_space, target) == -1
-    assert binary_search_with_miss(search_space, target) == -1
+def test_nearest():
+    search_space = [1, 2, 3, 4, 6, 7, 8, 9, 10]
+    #                           ^
+    assert adv_binary_search(search_space, 4) == 3
+    assert adv_binary_search(search_space, 5) == -1
+    assert adv_binary_search(search_space, 6) == 4
