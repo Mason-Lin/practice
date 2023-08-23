@@ -38,6 +38,30 @@ def binary_search_with_miss(array, target) -> int:
     return left if array[left] == target else -1
 
 
+# It returns location of x in given array arr
+def binarySearch(arr, l, r, x):
+ 
+    while l <= r:
+ 
+        mid = l + (r - l) // 2
+ 
+        # Check if x is present at mid
+        if arr[mid] == x:
+            return mid
+ 
+        # If x is greater, ignore left half
+        elif arr[mid] < x:
+            l = mid + 1
+ 
+        # If x is smaller, ignore right half
+        else:
+            r = mid - 1
+ 
+    # If we reach here, then the element
+    # was not present
+    return -1
+ 
+
 # Tips:
 # Correctly initialize the boundary variables left and right to specify search space. Only one rule: set up the boundary to include all possible elements;
 # Decide return value. Is it return left or return left - 1? Remember this: after exiting the while loop, left is the minimal k​ satisfying the condition function;
