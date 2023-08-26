@@ -1,19 +1,17 @@
 """[Python] Powerful Ultimate Binary Search Template. Solved many problems."""
 
 
-def basic_binary_search(arr, t):
-    l, r = 0, len(arr) - 1
+def basic_binary_search(arr, target):
+    left, right = 0, len(arr) - 1
 
-    while l <= r:
-        mid = l + (r - l) // 2
-
-        if arr[mid] == t:
-            return mid
-
-        if arr[mid] > t:
-            r = mid - 1
+    while left <= right:
+        mid = left + (right - left) // 2
+        if arr[mid] > target:
+            right = mid - 1
+        elif arr[mid] < target:
+            left = mid + 1
         else:
-            l = mid + 1
+            return mid
     return -1
 
 
@@ -28,31 +26,31 @@ def basic_binary_search(arr, t):
 #       lo = mid + 1;
 # }
 # return lo;
-def adv_binary_search(arr, t) -> int:
-    l, r = 0, len(arr) - 1
+def adv_binary_search(arr, target) -> int:
+    left, right = 0, len(arr) - 1
 
     def condition(mid) -> bool:
-        if arr[mid] > t:
+        if arr[mid] > target:
             return True
         return False
 
-    while l < r:
-        mid = l + (r - l) // 2
+    while left < right:
+        mid = left + (right - left) // 2
 
         # optional, exactly match
-        if arr[mid] == t:
+        if arr[mid] == target:
             return mid
 
         if condition(mid):
-            r = mid
+            right = mid
         else:
-            l = mid + 1
+            left = mid + 1
 
     # optional, check if left boundary is the target
-    if arr[l] != t:
+    if arr[left] != target:
         return -1
 
-    return l
+    return left
 
 
 # Tips:
