@@ -13,5 +13,6 @@ def print_tree(root):
     print_tree(root.right)
 
 
-root = Node(1, Node(2), Node(3))
-print_tree(root)
+def test_it():
+    root = Node(1, Node(2), Node(3))
+    print_tree(root)
