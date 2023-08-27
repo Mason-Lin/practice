@@ -1,39 +1,35 @@
+# pylint: disable=C0200
 class Solution:
     def threeSumTwoPointer(self, nums: list[int]) -> list[list[int]]:
-        # two points
-        nums.sort()  # nlogn
+        # two pointers
+        nums.sort()
+        results = []
+        three_sum_target = 0
 
-        res = []
-        for i, num in enumerate(nums):  # skip duplicate
-            if num > 0:
-                break
+        for i in range(len(nums) - 2):
+            if i == 0 or (i > 0 and nums[i - 1] != nums[i]):
+                two_sum_target = three_sum_target - nums[i]
 
-            # skip dup
-            if i > 0 and num == nums[i - 1]:
-                continue
-
-            # two sum
-            left, right, target = i + 1, len(nums) - 1, -num
-            while left < right:
-                left_plus_right = nums[left] + nums[right]
-
-                if left_plus_right == target:
-                    res.append((-target, nums[left], nums[right]))
-                    left += 1
-                    right -= 1
-
-                    # skip duplicate
-                    while left < right and nums[left] == nums[left - 1]:
+                # two sum
+                left = i + 1
+                right = len(nums) - 1
+                while left < right:
+                    s = nums[left] + nums[right]
+                    if s == two_sum_target:
+                        results.append((nums[i], nums[left], nums[right]))
                         left += 1
-                    while left < right and nums[right] == nums[right + 1]:
+                        right -= 1
+                        # skip duplicate
+                        while left < right and nums[left] == nums[left - 1]:
+                            left += 1
+                        while left < right and nums[right] == nums[right + 1]:
+                            right -= 1
+                    elif s < two_sum_target:
+                        left += 1
+                    else:
                         right -= 1
 
-                elif left_plus_right < target:
-                    left += 1
-                else:  # s > target
-                    right -= 1
-
-        return res
+        return results
 
     # BAD!!! time 7200ms
     def threeSumHashTable(self, nums: list[int]) -> list[list[int]]:
