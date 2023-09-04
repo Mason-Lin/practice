@@ -5,6 +5,7 @@ class Solution:
             if n not in seen:
                 seen[n] = True
 
+        # this is not two pointers 
         i = 0
         while i < len(numbers):
             left = target - numbers[i]
