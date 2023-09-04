@@ -2,7 +2,7 @@ class Solution:
     def twoSum(self, numbers: list[int], target: int) -> list[int]:
         seen = {}
         for n in numbers:
-            if n not in seem:
+            if n not in seen:
                 seen[n] = True
 
         i = 0
