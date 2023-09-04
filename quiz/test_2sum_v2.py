@@ -1,14 +1,14 @@
 class Solution:
     def twoSum(self, numbers: list[int], target: int) -> list[int]:
-        seem = {}
+        seen = {}
         for n in numbers:
             if n not in seem:
-                seem[n] = True
+                seen[n] = True
 
         i = 0
         while i < len(numbers):
             left = target - numbers[i]
-            if left not in seem:
+            if left not in seen:
                 i += 1
                 continue
             j = i + 1
