@@ -23,7 +23,7 @@ def left_bound(arr, target):
             left = mid + 1
         else:
             right = mid - 1
-    if left >= len(arr) or arr[left] != target:
+    if left < 0 or left >= len(arr) or arr[left] != target:
         return -1
     return left
 
@@ -39,7 +39,7 @@ def right_bound(arr, target):
             left = mid + 1
         else:
             left = mid + 1
-    if right < 0 or arr[right] != target:
+    if right < 0 or right >= len(arr) or arr[right] != target:
         return -1
     return right
 
