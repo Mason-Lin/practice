@@ -11,7 +11,7 @@ def binary_search(arr, target):
             return mid
     return -1
 
-
+# 這個方法不好，甚至多了一層
 def left_bound(arr, target):
     left, right = 0, len(arr) - 1
 
@@ -27,7 +27,7 @@ def left_bound(arr, target):
         return -1
     return left
 
-
+# 不好的方法
 def right_bound(arr, target):
     left, right = 0, len(arr) - 1
 
