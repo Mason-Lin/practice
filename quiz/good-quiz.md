@@ -57,7 +57,6 @@
 -   941. Valid Mountain Array
 -   283. Move Zeros
 -   167. Two Sum II – Input array is sorted
--   167. Two Sum II – Input array is sorted
 -   26. Remove Duplicates from Sorted Array
     -   80. Remove Duplicates from Sorted Array II
 -   56. Merge Intervals
@@ -114,7 +113,7 @@
 
 ## Stack
 
--   22. Valid Parentheses
+-   20. Valid Parentheses
 -   1249. Minimum Remove to Make Valid Parentheses
 -   1021. Remove Outermost Parentheses
 -   232. Implement Queue using Stacks
