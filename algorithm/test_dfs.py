@@ -116,11 +116,9 @@ def test_it():
     result = []
     dfs_recursive_preorder(head, result)
     assert result == [4, 2, 1, 3, 6, 5, 7]
-
     result = []
     dfs_recursive_inorder(head, result)
     assert result == [1, 2, 3, 4, 5, 6, 7]
-
     result = []
     dfs_recursive_postorder(head, result)
     assert result == [1, 3, 2, 5, 7, 6, 4]
@@ -133,3 +131,7 @@ def test_it():
     assert dfs_iterative_preorder(None) is None
     assert dfs_iterative_inorder(None) is None
     assert dfs_iterative_postorder(None) is None
+
+    assert dfs_iterative_preorder(Node(4)) == [4]
+    assert dfs_iterative_inorder(Node(4)) == [4]
+    assert dfs_iterative_postorder(Node(4)) == [4]
