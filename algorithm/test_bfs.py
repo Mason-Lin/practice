@@ -1,13 +1,14 @@
 # Python3 Program to print BFS traversal
 # from a given source vertex. BFS(int s)
 # traverses vertices reachable from s.
+from typing import Optional
 
 
 class Node:
     def __init__(self, val, left=None, right=None):
         self.val = val
-        self.left: Node = left
-        self.right: Node = right
+        self.left: Optional[Node] = left
+        self.right: Optional[Node] = right
 
 
 def bfs(head: Node):
