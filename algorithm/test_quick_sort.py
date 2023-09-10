@@ -20,21 +20,20 @@ def quick_sort(arr, left, right):
 
 
 def quick_sort2(arr, head, tail):
-    l, r = head, tail
-    if l < r:
-        m = l + (r - l) // 2
-        pivot = arr[m]
-        while l <= r:
-            while l <= r and arr[l] < pivot:
-                l += 1
-            while l <= r and arr[r] > pivot:
-                r -= 1
-            if l <= r:
-                arr[l], arr[r] = arr[r], arr[l]
-                l += 1
-                r -= 1
-        quick_sort2(arr, head, r)
-        quick_sort2(arr, l, tail)
+    left, right = head, tail
+    if left < right:
+        pivot = arr[right]
+        while left <= right:
+            while left <= right and arr[left] < pivot:
+                left += 1
+            while left <= right and arr[right] > pivot:
+                right -= 1
+            if left <= right:
+                arr[left], arr[right] = arr[right], arr[left]
+                left += 1
+                right -= 1
+        quick_sort2(arr, head, right)
+        quick_sort2(arr, left, tail)
 
 
 def test_quick_sort():

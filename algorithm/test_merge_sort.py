@@ -1,17 +1,17 @@
 # """merge sort but not in-place."""
 
 
-def merge(l, r):
+def merge(left, right):
     i, j = 0, 0
     result = []
-    while i < len(l) and j < len(r):
-        if l[i] < r[j]:
-            result.append(l[i])
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
             i += 1
         else:
-            result.append(r[j])
+            result.append(right[j])
             j += 1
-    return result + l[i:] + r[j:]
+    return result + left[i:] + right[j:]
 
 
 # my merge sort template
@@ -19,9 +19,9 @@ def merge_sort(arr):
     if len(arr) <= 1:
         return arr
     mid = len(arr) // 2
-    l = merge_sort(arr[:mid])
-    r = merge_sort(arr[mid:])
-    return merge(l, r)
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
 
 
 def test_merge_sort():
