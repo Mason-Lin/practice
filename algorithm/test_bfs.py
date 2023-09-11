@@ -1,6 +1,7 @@
 # Python3 Program to print BFS traversal
 # from a given source vertex. BFS(int s)
 # traverses vertices reachable from s.
+from collections import deque
 from typing import Optional
 
 
@@ -12,10 +13,11 @@ class Node:
 
 
 def bfs(head: Node):
-    queue = [head]
+    queue = deque()
+    queue.append(head)
     result = []
     while queue:
-        node = queue.pop(0)
+        node = queue.popleft()
         result.append(node.val)
         if node.left:
             queue.append(node.left)
