@@ -5,6 +5,7 @@ class Solution:
         def backtracking(temp, result):
             sum_temp = sum(temp)
             if sum_temp == target:
+                # 也許result用set就可以
                 comb = Counter(temp)
                 if comb not in seen:
                     result.append([*temp])
