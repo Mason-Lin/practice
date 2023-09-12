@@ -5,16 +5,16 @@ import pytest
 
 
 def test_all():
-    stack = queue.PriorityQueue(maxsize=3)
-    stack.put(2)
-    stack.put(1)
-    stack.put(3)
+    pq = queue.PriorityQueue(maxsize=3)
+    pq.put(2)
+    pq.put(1)
+    pq.put(3)
 
     with pytest.raises(queue.Full):
-        stack.put(4, timeout=0)
+        pq.put(4, timeout=0)
     with pytest.raises(queue.Full):
-        stack.put_nowait(4)
+        pq.put_nowait(4)
 
-    assert stack.get() == 1
-    assert stack.get() == 2
-    assert stack.get() == 3
+    assert pq.get() == 1
+    assert pq.get() == 2
+    assert pq.get() == 3
