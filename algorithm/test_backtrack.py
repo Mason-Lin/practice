@@ -3,19 +3,19 @@
 
 class Solution1:
     def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
-        res = []
+        ans = []
         candidates.sort()
-        self.dfs(candidates, target, 0, [], res)
-        return res
+        self.dfs(candidates, target, 0, [], ans)
+        return ans
 
-    def dfs(self, nums, target, index, path, res):
+    def dfs(self, nums, target, index, path, ans):
         if target < 0:
             return  # backtracking
         if target == 0:
-            res.append(path)
+            ans.append(path)
             return
         for i in range(index, len(nums)):
-            self.dfs(nums, target - nums[i], i, [*path, nums[i]], res)
+            self.dfs(nums, target - nums[i], i, [*path, nums[i]], ans)
 
 
 # 40. Combination Sum II https://leetcode.com/problems/combination-sum-ii/description/
@@ -23,21 +23,21 @@ class Solution1:
 
 class Solution2:
     def combinationSum2(self, candidates: list[int], target: int) -> list[list[int]]:
-        res = []
+        ans = []
         candidates.sort()
-        self.dfs(candidates, target, 0, [], res)
-        return res
+        self.dfs(candidates, target, 0, [], ans)
+        return ans
 
-    def dfs(self, nums, target, index, path, res):
+    def dfs(self, nums, target, index, path, ans):
         if target < 0:
             return  # backtracking
         if target == 0:
-            res.append(path)
+            ans.append(path)
             return  # backtracking
         for i in range(index, len(nums)):
             if i > index and nums[i] == nums[i - 1]:
                 continue
-            self.dfs(nums, target - nums[i], i + 1, [*path, nums[i]], res)
+            self.dfs(nums, target - nums[i], i + 1, [*path, nums[i]], ans)
 
 
 # 46. Permutations https://leetcode.com/problems/permutations/description/
@@ -45,16 +45,16 @@ class Solution2:
 
 class Solution3:
     def permute(self, nums: list[int]) -> list[list[int]]:
-        res = []
-        self.dfs(nums, [], res)
-        return res
+        ans = []
+        self.dfs(nums, [], ans)
+        return ans
 
-    def dfs(self, nums, path, res):
+    def dfs(self, nums, path, ans):
         if not nums:
-            res.append(path)
+            ans.append(path)
             # return # backtracking
         for i in range(len(nums)):
-            self.dfs(nums[:i] + nums[i + 1 :], [*path, nums[i]], res)
+            self.dfs(nums[:i] + nums[i + 1 :], [*path, nums[i]], ans)
 
 
 # 47. Permutations II https://leetcode.com/problems/permutations-ii/description/
@@ -62,21 +62,21 @@ class Solution3:
 
 class Solution4:
     def permuteUnique(self, nums: list[int]) -> list[list[int]]:
-        res, visited = [], [False] * len(nums)
+        ans, visited = [], [False] * len(nums)
         nums.sort()
-        self.dfs(nums, visited, [], res)
-        return res
+        self.dfs(nums, visited, [], ans)
+        return ans
 
-    def dfs(self, nums, visited, path, res):
+    def dfs(self, nums, visited, path, ans):
         if len(nums) == len(path):
-            res.append(path)
+            ans.append(path)
             return
         for i in range(len(nums)):
             if not visited[i]:
                 if i > 0 and not visited[i - 1] and nums[i] == nums[i - 1]:  # here should pay attention
                     continue
                 visited[i] = True
-                self.dfs(nums, visited, [*path, nums[i]], res)
+                self.dfs(nums, visited, [*path, nums[i]], ans)
                 visited[i] = False
 
 
@@ -85,15 +85,15 @@ class Solution4:
 
 class Solution5:
     def subsets(self, nums: list[int]) -> list[list[int]]:
-        res = []
+        ans = []
         nums.sort()
-        self.dfs(nums, 0, [], res)
-        return res
+        self.dfs(nums, 0, [], ans)
+        return ans
 
-    def dfs(self, nums, index, path, res):
-        res.append(path)
+    def dfs(self, nums, index, path, ans):
+        ans.append(path)
         for i in range(index, len(nums)):
-            self.dfs(nums, i + 1, [*path, nums[i]], res)
+            self.dfs(nums, i + 1, [*path, nums[i]], ans)
 
 
 # 90. Subsets II https://leetcode.com/problems/subsets-ii/description/
@@ -101,14 +101,14 @@ class Solution5:
 
 class Solution6:
     def subsetsWithDup(self, nums: list[int]) -> list[list[int]]:
-        res = []
+        ans = []
         nums.sort()
-        self.dfs(nums, 0, [], res)
-        return res
+        self.dfs(nums, 0, [], ans)
+        return ans
 
-    def dfs(self, nums, index, path, res):
-        res.append(path)
+    def dfs(self, nums, index, path, ans):
+        ans.append(path)
         for i in range(index, len(nums)):
             if i > index and nums[i] == nums[i - 1]:
                 continue
-            self.dfs(nums, i + 1, [*path, nums[i]], res)
+            self.dfs(nums, i + 1, [*path, nums[i]], ans)
