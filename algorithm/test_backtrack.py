@@ -1,22 +1,45 @@
+from collections import Counter
+
+import pytest
+
 # 39. Combination Sum https://leetcode.com/problems/combination-sum/description/
 
 
 # 數字可重複使用
 class Solution1:
     def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
-        ans = []
         candidates.sort()
-        self.dfs(candidates, target, 0, [], ans)
+        return self.dfs(candidates, target, [])
+
+    def dfs(self, nums, target, path):
+        if target < 0:
+            return []
+        if target == 0:
+            return [path]
+        ans = []
+        for i in range(len(nums)):
+            ans.extend(self.dfs(nums[i:], target - nums[i], [*path, nums[i]]))
         return ans
 
-    def dfs(self, nums, target, index, path, ans):
-        if target < 0:
-            return  # backtracking
-        if target == 0:
-            ans.append(path)
-            return
-        for i in range(index, len(nums)):
-            self.dfs(nums, target - nums[i], i, [*path, nums[i]], ans)
+
+@pytest.mark.parametrize(
+    ("nums", "target", "expected_ans"),
+    [
+        ([2, 3, 4], 6, [[2, 2, 2], [2, 4], [3, 3]]),
+        ([2, 3, 4], 4, [[4], [2, 2]]),
+        ([2, 3, 4], 3, [[3]]),
+        ([2], 2, [[2]]),
+        ([2], 1, []),
+        ([], 1, []),
+        ([40], 40, [[40]]),
+        ([2], 40, [[2] * 20]),
+        (list(range(2, 32)), 1, []),
+        (list(range(2, 32)), 6, [[2, 2, 2], [2, 4], [3, 3], [6]]),
+    ],
+)
+def test_1(nums, target, expected_ans):
+    actual_ans = Solution1().combinationSum(nums, target)
+    assert sorted(expected_ans) == sorted(actual_ans)  # sorted if needed
 
 
 # 40. Combination Sum II https://leetcode.com/problems/combination-sum-ii/description/
@@ -25,21 +48,33 @@ class Solution1:
 # 數字不能重複使用
 class Solution2:
     def combinationSum2(self, candidates: list[int], target: int) -> list[list[int]]:
+        nums = candidates
+        nums.sort()
+        return self.dfs(nums, target, [])
+
+    def dfs(self, nums: list, target: int, path: list) -> list:
+        if target == 0:
+            return [path]
+        if target < 0:
+            return []
         ans = []
-        candidates.sort()
-        self.dfs(candidates, target, 0, [], ans)
+        for i in range(len(nums)):
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            ans.extend(self.dfs(nums[i + 1 :], target - nums[i], [*path, nums[i]]))
         return ans
 
-    def dfs(self, nums, target, index, path, ans):
-        if target < 0:
-            return  # backtracking
-        if target == 0:
-            ans.append(path)
-            return  # backtracking
-        for i in range(index, len(nums)):
-            if i > index and nums[i] == nums[i - 1]:
-                continue
-            self.dfs(nums, target - nums[i], i + 1, [*path, nums[i]], ans)
+
+@pytest.mark.parametrize(
+    ("nums", "target", "expected_ans"),
+    [
+        ([10, 1, 2, 7, 6, 1, 5], 8, [[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]]),
+        ([2, 5, 2, 1, 2], 5, [[1, 2, 2], [5]]),
+    ],
+)
+def test_2(nums, target, expected_ans):
+    actual_ans = Solution2().combinationSum2(nums, target)
+    assert sorted(expected_ans) == sorted(actual_ans)  # sorted if needed
 
 
 # 216. Combination Sum III https://leetcode.com/problems/combination-sum-iii/description/
@@ -48,18 +83,32 @@ class Solution2:
 # 數字不可重複使用且數量有限制
 class Solution3:
     def combinationSum3(self, k, n):
-        ans = []
         nums = list(range(1, 10))
-        self.dfs(nums, k, n, 0, [], ans)
+        return self.dfs(nums, n, k, [])
+
+    def dfs(self, nums, target, size_limit, path):
+        if target == 0 and size_limit == 0:
+            return [path]
+        if target < 0 and size_limit < 0:
+            return []
+        ans = []
+        for i in range(len(nums)):
+            sub_ans = self.dfs(nums[i + 1 :], target - nums[i], size_limit - 1, [*path, nums[i]])
+            ans.extend(sub_ans)
         return ans
 
-    def dfs(self, nums, len_ans, target, index, path, ans):
-        if len_ans < 0 or target < 0:
-            return
-        if len_ans == 0 and target == 0:
-            ans.append(path)
-        for i in range(index, len(nums)):
-            self.dfs(nums, len_ans - 1, target - nums[i], i + 1, [*path, nums[i]], ans)
+
+@pytest.mark.parametrize(
+    ("k", "n", "expected_ans"),
+    [
+        (3, 7, [[1, 2, 4]]),
+        (3, 9, [[1, 2, 6], [1, 3, 5], [2, 3, 4]]),
+        (4, 1, []),
+    ],
+)
+def test_3(k, n, expected_ans):
+    actual_ans = Solution3().combinationSum3(k, n)
+    assert sorted(expected_ans) == sorted(actual_ans)  # sorted if needed
 
 
 # 46. Permutations https://leetcode.com/problems/permutations/description/
@@ -69,17 +118,35 @@ class Solution3:
 # 挑過就排除掉
 class Solution4:
     def permute(self, nums: list[int]) -> list[list[int]]:
-        ans = []
         nums.sort()
-        self.dfs(nums, [], ans)
+        counter = Counter(nums)
+        return self.dfs(nums, counter, [])
+
+    def dfs(self, nums, counter, path):
+        # Base case
+        if len(nums) == len(path):
+            return [path]
+
+        ans = []
+        for num in counter:
+            if counter[num] > 0:
+                counter[num] -= 1
+                sub_ans = self.dfs(nums, counter, [*path, num])
+                ans.extend(sub_ans)
+                counter[num] += 1
         return ans
 
-    def dfs(self, nums, path, ans):
-        if not nums:
-            ans.append(path)
-            return
-        for i in range(len(nums)):
-            self.dfs(nums[:i] + nums[i + 1 :], [*path, nums[i]], ans)
+    #     nums.sort()  # nlogn
+    #     return self.dfs(nums, [])  # n * n!
+
+    # def dfs(self, nums, path):
+    #     if not nums:
+    #         return [path]
+    #     ans = []
+    #     for i in range(len(nums)):
+    #         sub_ans = self.dfs(nums[:i] + nums[i + 1 :], [*path, nums[i]])
+    #         ans.extend(sub_ans)
+    #     return ans
 
 
 def test_4():
@@ -102,22 +169,40 @@ def test_4():
 
 class Solution5:
     def permuteUnique(self, nums: list[int]) -> list[list[int]]:
-        ans, visited = [], [False] * len(nums)
         nums.sort()
-        self.dfs(nums, visited, [], ans)
+        counter = Counter(nums)
+        return self.dfs(nums, counter, [])
+
+    def dfs(self, nums, counter, path):
+        # Base case
+        if len(nums) == len(path):
+            return [path]
+
+        ans = []
+        for num in counter:
+            if counter[num] > 0:
+                counter[num] -= 1
+                sub_ans = self.dfs(nums, counter, [*path, num])
+                ans.extend(sub_ans)
+                counter[num] += 1
         return ans
 
-    def dfs(self, nums, visited, path, ans):
-        if len(nums) == len(path):
-            ans.append(path)
-            return
-        for i in range(len(nums)):
-            if not visited[i]:
-                if i > 0 and not visited[i - 1] and nums[i] == nums[i - 1]:
-                    continue
-                visited[i] = True
-                self.dfs(nums, visited, [*path, nums[i]], ans)
-                visited[i] = False
+    #     ans, visited = [], [False] * len(nums)
+    #     nums.sort()
+    #     self.dfs(nums, visited, [], ans)
+    #     return ans
+
+    # def dfs(self, nums, visited, path, ans):
+    #     if len(nums) == len(path):
+    #         ans.append(path)
+    #         return
+    #     for i in range(len(nums)):
+    #         if not visited[i]:
+    #             if i > 0 and not visited[i - 1] and nums[i] == nums[i - 1]:
+    #                 continue
+    #             visited[i] = True
+    #             self.dfs(nums, visited, [*path, nums[i]], ans)
+    #             visited[i] = False
 
 
 def test_5():
