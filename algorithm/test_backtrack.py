@@ -222,15 +222,15 @@ def test_5():
 
 class Solution6:
     def subsets(self, nums: list[int]) -> list[list[int]]:
-        ans = []
-        nums.sort()
-        self.dfs(nums, 0, [], ans)
-        return ans
+        nums.sort()  # nlogn
+        return self.dfs(nums, [])
 
-    def dfs(self, nums, index, path, ans):
-        ans.append(path)
-        for i in range(index, len(nums)):
-            self.dfs(nums, i + 1, [*path, nums[i]], ans)
+    def dfs(self, nums, path):
+        ans = []
+        ans.append(path)  # [[], [1], [2], [1,2], [1,3], [2,3], [1,2,3]]
+        for i in range(len(nums)):  # nums[i]:1{2}
+            ans += self.dfs(nums[i + 1 :], [*path, nums[i]])
+        return ans
 
 
 # 90. Subsets II https://leetcode.com/problems/subsets-ii/description/
@@ -238,14 +238,15 @@ class Solution6:
 
 class Solution7:
     def subsetsWithDup(self, nums: list[int]) -> list[list[int]]:
-        ans = []
         nums.sort()
-        self.dfs(nums, 0, [], ans)
-        return ans
+        return self.dfs(nums, [])
 
-    def dfs(self, nums, index, path, ans):
+    def dfs(self, nums, path):
+        ans = []
         ans.append(path)
-        for i in range(index, len(nums)):
-            if i > index and nums[i] == nums[i - 1]:
+        for i in range(len(nums)):
+            # ... skip dup
+            if i > 0 and nums[i] == nums[i - 1]:
                 continue
-            self.dfs(nums, i + 1, [*path, nums[i]], ans)
+            ans += self.dfs(nums[i + 1 :], [*path, nums[i]])
+        return ans
