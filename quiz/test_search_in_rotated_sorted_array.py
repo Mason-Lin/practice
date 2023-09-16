@@ -1,36 +1,17 @@
-class Solution:
+# 33. Search in Rotated Sorted Array
+# https://leetcode.com/problems/search-in-rotated-sorted-array/description/
+class Solution33:
     def search(self, nums: list[int], target: int) -> int:
         n = len(nums)
-        if n == 1:
-            return 0 if nums[0] == target else -1
-
         left, right = 0, n - 1
         while left < right:
             mid = left + (right - left) // 2
 
-            if nums[mid] < nums[-1]:
+            if nums[mid] <= nums[right]:
                 right = mid
             else:
                 left = mid + 1
         # left is starting point
-
-        # def binary_search(nums, left, right, target):
-        #     while left <= right:
-        #         mid = left + (right - left) // 2
-
-        #         if nums[mid] > target:
-        #             right = mid - 1
-        #         elif nums[mid] < target:
-        #             left = mid + 1
-        #         else:
-        #             return mid
-        #     return -1
-
-        # found_in_left = binary_search(nums, 0, middle - 1, target)
-        # found_in_right = binary_search(nums, middle, len(nums) - 1, target)
-        # if found_in_left == -1 and found_in_right == -1:
-        #     return -1
-        # return found_in_left if found_in_left != -1 else found_in_right
 
         rot = left
         left = 0
@@ -49,9 +30,65 @@ class Solution:
         return -1
 
 
-def test_it():
-    assert Solution().search([4, 5, 6, 7, 0, 1, 2], 0) == 4
-    assert Solution().search([4, 5, 6, 7, 0, 1, 2], 3) == -1
+def test_33():
+    assert Solution33().search([4, 5, 6, 7, 0, 1, 2], 0) == 4
+    assert Solution33().search([4, 5, 6, 7, 0, 1, 2], 3) == -1
 
 
-test_it()
+# 81. Search in Rotated Sorted Array II
+# https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/
+class Solution81:
+    def search(self, nums: list[int], target: int) -> bool:
+        n = len(nums)
+        left, right = 0, n - 1
+        while left <= right:
+            while left < right and nums[left] == nums[left + 1]:
+                left += 1
+            while left < right and nums[right] == nums[right - 1]:
+                right -= 1
+
+            mid = left + (right - left) // 2
+
+            if nums[mid] == target:
+                return True
+            if nums[left] <= nums[mid]:
+                if nums[left] <= target <= nums[mid]:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+            else:
+                if nums[mid] <= target <= nums[right]:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+        return False
+
+
+def test_81():
+    assert Solution81().search([2, 5, 6, 0, 0, 1, 2], 0) is True
+    assert Solution81().search([2, 5, 6, 0, 0, 1, 2], 3) is False
+
+
+# 153. Find Minimum in Rotated Sorted Array
+# https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/
+class Solution153:
+    def findMin(self, nums: list[int]) -> int:
+        return self.binary_search(nums)
+
+    def binary_search(self, nums):
+        left, right = 0, len(nums) - 1
+        # return the index when nums[index] > nums[index+1]
+        while left < right:
+            mid = left + (right - left) // 2
+
+            if nums[mid] <= nums[right]:
+                # shrink right boundary
+                right = mid
+            else:
+                left = mid + 1
+        return nums[left]
+
+
+def test_153():
+    assert Solution153().findMin([3, 4, 5, 1, 2]) == 1
+    assert Solution153().findMin([4, 5, 6, 7, 0, 1, 2]) == 0
