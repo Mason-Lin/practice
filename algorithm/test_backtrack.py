@@ -152,16 +152,7 @@ class Solution4:
 def test_4():
     nums = [1, 2, 3]
     ans = Solution4().permute(nums)
-    assert sorted(ans) == sorted(
-        [
-            [1, 2, 3],
-            [1, 3, 2],
-            [2, 1, 3],
-            [2, 3, 1],
-            [3, 2, 1],
-            [3, 1, 2],
-        ]
-    )
+    assert sorted(ans) == sorted([[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 2, 1], [3, 1, 2]])
 
 
 # 47. Permutations II https://leetcode.com/problems/permutations-ii/description/
@@ -208,13 +199,7 @@ class Solution5:
 def test_5():
     nums = [1, 1, 2]
     ans = Solution5().permuteUnique(nums)
-    assert sorted(ans) == sorted(
-        [
-            [1, 1, 2],
-            [1, 2, 1],
-            [2, 1, 1],
-        ]
-    )
+    assert sorted(ans) == sorted([[1, 1, 2], [1, 2, 1], [2, 1, 1]])
 
 
 # 78. Subsets https://leetcode.com/problems/subsets/description/
@@ -231,6 +216,12 @@ class Solution6:
         for i in range(len(nums)):  # nums[i]:1{2}
             ans += self.dfs(nums[i + 1 :], [*path, nums[i]])
         return ans
+
+
+def test_6():
+    nums = [1, 2, 3]
+    ans = Solution6().subsets(nums)
+    assert sorted(ans) == sorted([[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]])
 
 
 # 90. Subsets II https://leetcode.com/problems/subsets-ii/description/
@@ -250,3 +241,9 @@ class Solution7:
                 continue
             ans += self.dfs(nums[i + 1 :], [*path, nums[i]])
         return ans
+
+
+def test_7():
+    nums = [1, 2, 2]
+    ans = Solution7().subsetsWithDup(nums)
+    assert sorted(ans) == sorted([[], [1], [1, 2], [1, 2, 2], [2], [2, 2]])
