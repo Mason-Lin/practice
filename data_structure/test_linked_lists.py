@@ -1,7 +1,11 @@
+# https://medium.com/@derekfan/%E4%B9%9D%E7%AB%A0%E7%AE%97%E6%B3%95-template-binary-tree-divide-conquer-75e5f80f2d21
+from typing import Optional
+
+
 class Node:
-    def __init__(self, data=None, next=None):
-        self.data = data
-        self.next = next
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next: Optional[Node] = next
 
 
 class LinkedList:
@@ -113,3 +117,26 @@ class LinkedList:
             length += 1
             current_node = current_node.next
         return length
+
+
+# 使用快慢指針找出中點
+def findMiddle(node):
+    fast = slow = node
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow
+
+
+# 反轉linked list
+def reverseNode(node):
+    if not node or not node.next:
+        return node
+    prev = None
+    cur = node
+    while cur:
+        temp = cur
+        cur = cur.next
+        temp.next = prev
+        prev = temp
+    return prev
