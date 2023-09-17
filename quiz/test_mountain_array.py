@@ -1,7 +1,7 @@
 # 941. Valid Mountain Array
 # https://leetcode.com/problems/valid-mountain-array/description/
 class Solution941:
-    def validMountainArray(self, arr: List[int]) -> bool:
+    def validMountainArray(self, arr: list[int]) -> bool:
         if len(arr) < 3:
             return False
 
@@ -17,7 +17,7 @@ class Solution941:
 # 852. Peak Index in a Mountain Array
 # https://leetcode.com/problems/peak-index-in-a-mountain-array/description/
 class Solution852:
-    def peakIndexInMountainArray(self, arr: List[int]) -> int:
+    def peakIndexInMountainArray(self, arr: list[int]) -> int:
         # 0 1 2 3 2 1 0
         n = len(arr)
         left, right = 0, n - 1
@@ -81,3 +81,48 @@ class Solution1095:
             else:
                 return mid
         return -1
+
+
+# 162. Find Peak Element
+# https://leetcode.com/problems/find-peak-element/description/
+class Solution:
+    def findPeakElement(self, nums: list[int]) -> int:
+        # binary search work because the conditions
+        # 1. nums[-1] = nums[n] = -∞
+        # 2. nums[i] != nums[i + 1] for all valid i.
+        # 3. return the index to any of the peaks.
+        # find peak and return index
+        left, right = 0, len(nums) - 1
+        while left < right:
+            mid = left + (right - left) // 2
+            if nums[mid] > nums[mid + 1]:
+                right = mid
+            else:
+                left = mid + 1
+        return left
+
+
+# 1901. Find a Peak Element II
+# https://leetcode.com/problems/find-a-peak-element-ii/description/
+class Solution:
+    def findPeakGrid(self, mat: list[list[int]]) -> list[int]:
+        # because the conditions so we can use binary search
+        # 1. no two adjacent cells are equal
+        # 2. find any peak
+        # 3. entire matrix is surrounded by an outer perimeter with the value -1 in each cell.
+        # 4. 1 <= mat[i][j]
+
+        # we use binary to find any peak row
+        m, n = len(mat), len(mat[0])
+        # 0            n-1
+        # mid
+        # m-1
+        left, right = 0, m - 1  # row number
+        while left < right:
+            mid = left + (right - left) // 2
+
+            if max(mat[mid]) > max(mat[mid + 1]):
+                right = mid
+            else:
+                left = mid + 1
+        return [left, mat[left].index(max(mat[left]))]
