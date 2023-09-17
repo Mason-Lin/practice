@@ -49,9 +49,13 @@ class Solution81:
 
             mid = left + (right - left) // 2
 
+            #           top
+            # left
+            #                           right
+            #               bottom
             if nums[mid] == target:
                 return True
-            if nums[left] <= nums[mid]:
+            if nums[left] <= nums[mid]:  # in the left part
                 if nums[left] <= target <= nums[mid]:
                     right = mid - 1
                 else:
