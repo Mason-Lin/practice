@@ -64,10 +64,10 @@ class Solution3:
         left = 0
         window = Counter()
         for right in range(len(s)):
-            window.update(s[right])
+            window[s[right]] += 1
 
             while window[s[right]] > 1:
-                window.subtract(s[left])
+                window[s[left]] -= 1
                 left += 1
 
             length = max(length, right - left + 1)
@@ -89,10 +89,10 @@ class Solution438:
 
         for i in range(len(s)):
             if s[i] in window:
-                window.subtract(s[i])
+                window[s[i]] -= 1
 
             if i >= size and s[i - size] in window:
-                window.update(s[i - size])
+                window[s[i - size]] += 1
 
             if all(window[c] == 0 for c in window):
                 ans.append(i - size + 1)
