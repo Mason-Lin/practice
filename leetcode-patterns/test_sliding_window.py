@@ -1,4 +1,13 @@
-from collections import Counter, defaultdict
+from collections import Counter
+
+# 1248 Count Number of Nice Subarrays
+# 1234 Replace the Substring for Balanced String
+# 1004 Max Consecutive Ones III
+# 930 Binary Subarrays With Sum
+# 992 Subarrays with K Different Integers
+# 904 Fruit Into Baskets
+# 862 Shortest Subarray with Sum at Least K
+# 209 Minimum Size Subarray Sum
 
 
 def window_needs_shrink():
@@ -49,25 +58,20 @@ def test_643():
 
 
 # 3. Longest Substring Without Repeating Characters
-
-
 class Solution3:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        length = 0
         left = 0
-        cnt = 0
-        seems = defaultdict(int)
+        window = Counter()
         for right in range(len(s)):
-            # update window
-            seems[s[right]] += 1
+            window.update(s[right])
 
-            # shrink
-            while seems[s[right]] > 1:
-                # update window
-                seems[s[left]] -= 1
+            while window[s[right]] > 1:
+                window.subtract(s[left])
                 left += 1
 
-            cnt = max(cnt, right - left + 1)
-        return cnt
+            length = max(length, right - left + 1)
+        return length
 
 
 def test_3():
@@ -77,29 +81,21 @@ def test_3():
 
 
 # 438. Find All Anagrams in a String
-
-
 class Solution438:
     def findAnagrams(self, s: str, p: str) -> list[int]:
-        target = Counter(p)
-        window = Counter(s[: len(p) - 1])
+        window = Counter(p)
         ans = []
-        left = 0
+        size = len(p)
 
-        for i in range(len(p) - 1, len(s)):
-            c = s[i]
-            window[c] += 1
+        for i in range(len(s)):
+            if s[i] in window:
+                window.subtract(s[i])
 
-            if window == target:
-                ans.append(left)
+            if i >= size and s[i - size] in window:
+                window.update(s[i - size])
 
-            d = s[left]
-            window[d] -= 1
-
-            if window[d] == 0:
-                del window[d]
-            left += 1
-
+            if all(window[c] == 0 for c in window):
+                ans.append(i - size + 1)
         return ans
 
 
@@ -129,3 +125,52 @@ class Solution567:
 def test_567():
     assert Solution567().checkInclusion(s1="ab", s2="eidbaooo") is True
     assert Solution567().checkInclusion(s1="ab", s2="eidboaoo") is False
+
+
+# 1004. Max Consecutive Ones III
+class Solution1004:
+    def longestOnes(self, nums: list[int], k: int) -> int:
+        window = Counter()
+        length = 0
+        left = 0
+
+        for i in range(len(nums)):
+            # extend
+            window[nums[i]] += 1
+
+            # shrink
+            while window[0] > k:
+                window[nums[left]] -= 1
+                left += 1
+
+            length = max(length, i - left + 1)
+        return length
+
+
+def test_1004():
+    assert Solution1004().longestOnes(nums=[1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], k=2) == 6
+    assert Solution1004().longestOnes(nums=[0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1], k=3) == 10
+
+
+# 1493. Longest Subarray of 1's After Deleting One Element
+class Solution1493:
+    def longestSubarray(self, nums: list[int]) -> int:
+        window = 1
+        left = 0
+        length = 0
+        for i in range(len(nums)):
+            if nums[i] == 0:
+                window -= 1
+
+            while window < 0:
+                if nums[left] == 0:
+                    window += 1
+                left += 1
+            length = max(length, i - left)
+        return length
+
+
+def test_1493():
+    assert Solution1493().longestSubarray(nums=[1, 1, 0, 1]) == 3
+    assert Solution1493().longestSubarray(nums=[0, 1, 1, 1, 0, 1, 1, 0, 1]) == 5
+    assert Solution1493().longestSubarray(nums=[1, 1, 1]) == 2
