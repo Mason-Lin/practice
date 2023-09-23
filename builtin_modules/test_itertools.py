@@ -31,6 +31,6 @@ def test_all():
 
     assert list(itertools.compress("ABCDE", b)) == ["A", "C", "E"] == [i for i, j in zip("ABCDE", b) if j]
 
-    assert list(itertools.dropwhile(lambda x: x < 5, [1, 4, 6, 4, 1])) == [6, 4, 1] == [i for i in [1, 4, 6, 4, 1] if i >= 5]
+    assert list(itertools.dropwhile(lambda x: x < 5, [1, 4, 6, 4, 1])) == [6, 4, 1]
 
     assert list(itertools.filterfalse(lambda x: x % 2, range(10))) == [0, 2, 4, 6, 8] == [i for i in range(10) if i % 2 == 0]
