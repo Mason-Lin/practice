@@ -46,3 +46,5 @@ You will very likely need to incorporate a hash map in some way.
 ## n > 1_000_000:
 
 `O(logn)` or `O(1)`
+
+![](find-solution-flowchart.png)
