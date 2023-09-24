@@ -3,11 +3,10 @@ from itertools import count
 from typing import Optional
 
 
-# Definition for singly-linked list.
 class ListNode:
-    def __init__(self, val):
+    def __init__(self, val: int, next=None):
         self.val = val
-        self.next = None
+        self.next = next
 
 
 # 141. Linked List Cycle

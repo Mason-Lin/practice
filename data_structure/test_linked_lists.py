@@ -2,14 +2,14 @@
 from typing import Optional
 
 
-class Node:
+class ListNode:
     def __init__(self, val: int, next=None, random=None):
-        self.val = int(val)
+        self.val = val
         self.next = next
         self.random = random
 
 
-def linked_list_to_array(linked_list: Node):
+def linked_list_to_array(linked_list: ListNode):
     array = []
     while linked_list:
         array.append(linked_list.val)
@@ -17,26 +17,26 @@ def linked_list_to_array(linked_list: Node):
     return array
 
 
-def create_linked_list(data) -> Node:
-    dummy = Node(-1)
+def create_linked_list(data) -> ListNode:
+    dummy = ListNode(-1)
     curr = dummy
     for val in data:
-        curr.next = Node(val)
+        curr.next = ListNode(val)
         curr = curr.next
     return dummy.next
 
 
-def insert(head: Node, index, data):
+def insert(head: ListNode, index, data):
     if head is None:
         raise ValueError("empty list")
 
     if index == 1:
-        new_node = Node(data)
+        new_node = ListNode(data)
         new_node.next = head
         return new_node
 
     cur_idx = 1
-    new_node = Node(data)
+    new_node = ListNode(data)
     current_node = head
     while cur_idx + 1 != index:
         current_node = current_node.next
@@ -46,7 +46,7 @@ def insert(head: Node, index, data):
     return head
 
 
-def delete(head: Node, index):
+def delete(head: ListNode, index):
     if head is None:
         raise ValueError("empty list")
 
@@ -62,7 +62,7 @@ def delete(head: Node, index):
     return head
 
 
-def length(head: Node):
+def length(head: ListNode):
     if head is None:
         raise ValueError("empty list")
 
@@ -74,7 +74,7 @@ def length(head: Node):
     return length
 
 
-def find_middle(head: Node):
+def find_middle(head: ListNode):
     if head is None:
         raise ValueError("empty list")
 
@@ -85,7 +85,7 @@ def find_middle(head: Node):
     return slow
 
 
-def reverse_node(head: Node):
+def reverse_node(head: ListNode):
     # less than 2 nodes
     if not head or not head.next:
         return head
@@ -100,7 +100,7 @@ def reverse_node(head: Node):
     return prev
 
 
-def copy_random_list(head: Node) -> Optional[Node]:
+def copy_random_list(head: ListNode) -> Optional[ListNode]:
     if head is None:
         return head
 
@@ -109,7 +109,7 @@ def copy_random_list(head: Node) -> Optional[Node]:
     while node:
         original_next = node.next
         # clone
-        cloned = Node(val=node.val, next=original_next, random=None)
+        cloned = ListNode(val=node.val, next=original_next, random=None)
         node.next = cloned
 
         # next
@@ -138,7 +138,7 @@ def copy_random_list(head: Node) -> Optional[Node]:
     return new_head
 
 
-def merge_two_lists_rec(list1: Node, list2: Node) -> Optional[Node]:
+def merge_two_lists_rec(list1: ListNode, list2: ListNode) -> Optional[ListNode]:
     if list1 is None:
         return list2
     if list2 is None:
@@ -151,7 +151,7 @@ def merge_two_lists_rec(list1: Node, list2: Node) -> Optional[Node]:
     return list2
 
 
-def remove_duplicates(head: Node) -> Optional[Node]:
+def remove_duplicates(head: ListNode) -> Optional[ListNode]:
     if head is None:
         return head
 
@@ -172,8 +172,8 @@ def remove_duplicates(head: Node) -> Optional[Node]:
     # return head
 
 
-def merge_two_lists(list1: Node, list2: Node) -> Optional[Node]:
-    new_node = dummy = Node(-1)
+def merge_two_lists(list1: ListNode, list2: ListNode) -> Optional[ListNode]:
+    new_node = dummy = ListNode(-1)
     node_1 = list1
     node_2 = list2
 

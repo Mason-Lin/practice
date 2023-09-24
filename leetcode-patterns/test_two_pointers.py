@@ -1,4 +1,12 @@
 from collections import defaultdict
+from typing import Optional
+
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val: int, next=None):
+        self.val = val
+        self.next = next
 
 
 # 283. Move Zeroes
@@ -87,3 +95,27 @@ class Solution1679:
 def test_1679():
     assert Solution1679().maxOperations(nums=[1, 2, 3, 4], k=5) == 2
     assert Solution1679().maxOperations(nums=[3, 1, 3, 4, 3], k=6) == 1
+
+
+# 167. Two Sum II - Input Array Is Sorted
+# 27. Remove Element
+# 344. Reverse String
+
+# 5. Longest Palindromic Substring
+
+# 26. Remove Duplicates from Sorted Array
+
+
+# 83. Remove Duplicates from Sorted List
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None:
+            return head
+        cur = head
+        while cur:
+            # 1 1 2 3 3
+            # c
+            while cur.next and cur.val == cur.next.val:
+                cur.next = cur.next.next
+            cur = cur.next
+        return head
