@@ -97,25 +97,55 @@ def test_1679():
     assert Solution1679().maxOperations(nums=[3, 1, 3, 4, 3], k=6) == 1
 
 
-# 167. Two Sum II - Input Array Is Sorted
-# 27. Remove Element
 # 344. Reverse String
+class Solution344:
+    def reverseString(self, s: list[str]) -> None:
+        """Do not return anything, modify s in-place instead."""
+        left, right = 0, len(s) - 1
+        while left < right:
+            # swap
+            s[left], s[right] = s[right], s[left]
+            left += 1
+            right -= 1
+        return s
 
-# 5. Longest Palindromic Substring
+
+# 27. Remove Element
+class Solution27:
+    def removeElement(self, nums: list[int], val: int) -> int:
+        slow = fast = 0
+        while fast < len(nums):
+            if nums[fast] != val:
+                nums[slow] = nums[fast]
+                slow += 1
+            fast += 1
+        return slow
+
 
 # 26. Remove Duplicates from Sorted Array
+class Solution26:
+    def removeDuplicates(self, nums: list[int]) -> int:
+        slow = 0
+        fast = 1
+        while fast < len(nums):
+            if nums[slow] != nums[fast]:
+                slow += 1
+                nums[slow] = nums[fast]
+            fast += 1
+        return slow + 1
 
 
 # 83. Remove Duplicates from Sorted List
-class Solution:
+class Solution83:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if head is None:
             return head
         cur = head
         while cur:
-            # 1 1 2 3 3
-            # c
             while cur.next and cur.val == cur.next.val:
                 cur.next = cur.next.next
             cur = cur.next
         return head
+
+
+# 5. Longest Palindromic Substring
