@@ -48,3 +48,31 @@ You will very likely need to incorporate a hash map in some way.
 `O(logn)` or `O(1)`
 
 ![](find-solution-flowchart.png)
+
+-   input is array or string
+    -   if sorted
+        -   binary search
+        -   two pointers
+    -   if not sorted
+        -   all of something
+            -   backtrack
+        -   number of ways to do something, max/min possible of something, is something possible
+            -   decisions depends on previous decisions
+                -   dynamic programming
+            -   decisions does not depends on previous decisions
+                -   greedy
+                    -   possible and impossible are two infinite zones
+                        -   binary search
+                -   not necessarily greedy
+                    -   sub-array or substrings
+                        -   sliding window or counting hash map
+                    -   continuously finding max/min element
+                        -   max/min continuously remove
+                    -   sliding window fashion
+                        -   monotonic queue
+        -   prefix matching
+            -   trie
+        -   string building, distance between elements
+            -   monotonic stack
+        -   finding specific element
+            -   hash maps
