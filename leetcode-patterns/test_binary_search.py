@@ -96,56 +96,7 @@ def test_nearest():
     assert binary_search_find_condition(search_space, 6) == 4
 
 
-# 這個方法不好，甚至多了一層
-def left_bound(arr, target):
-    left, right = 0, len(arr) - 1
-
-    while left <= right:
-        mid = left + (right - left) // 2
-        if arr[mid] > target:
-            right = mid - 1
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-    if left < 0 or left >= len(arr) or arr[left] != target:
-        return -1
-    return left
-
-
-# 不好的方法
-def right_bound(arr, target):
-    left, right = 0, len(arr) - 1
-
-    while left <= right:
-        mid = left + (right - left) // 2
-        if arr[mid] > target:
-            right = mid - 1
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            left = mid + 1
-    if right < 0 or right >= len(arr) or arr[right] != target:
-        return -1
-    return right
-
-
-def test_three_kind():
-    search_space = [1, 2, 3, 3, 3, 4, 5, 6]
-
-    assert binary_search_find_target(search_space, 7) == -1
-    assert binary_search_find_target(search_space, 2) == 1
-
-    assert left_bound(search_space, 7) == -1
-    assert left_bound(search_space, 3) == 2
-
-    assert right_bound(search_space, 7) == -1
-    assert right_bound(search_space, 3) == 4
-
-
 # 450. Delete Node in a BST
-
-
 class Solution450:
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
         if not root:
@@ -190,3 +141,45 @@ class Solution700:
                 return binary_search(root.right)
 
         return binary_search(root)
+
+
+# 34. Find First and Last Position of Element in Sorted Array
+class Solution34:
+    def searchRange(self, nums: list[int], target: int) -> list[int]:
+        def left_bound(nums, target):
+            n = len(nums)
+            left, right = 0, n - 1
+            while left <= right:
+                mid = left + (right - left) // 2
+                if nums[mid] > target:
+                    right = mid - 1
+                elif nums[mid] < target:
+                    left = mid + 1
+                elif nums[mid] == target:
+                    right = mid - 1
+            if left < 0 or left >= n or nums[left] != target:
+                return -1
+            return left
+
+        def right_bound(nums, target):
+            n = len(nums)
+            left, right = 0, n - 1
+            while left <= right:
+                mid = left + (right - left) // 2
+                if nums[mid] > target:
+                    right = mid - 1
+                elif nums[mid] < target:
+                    left = mid + 1
+                elif nums[mid] == target:
+                    left = mid + 1
+            if right < 0 or right >= n or nums[right] != target:
+                return -1
+            return right
+
+        return [left_bound(nums, target), right_bound(nums, target)]
+
+
+def test_34():
+    assert Solution34().searchRange(nums=[5, 7, 7, 8, 8, 10], target=8) == [3, 4]
+    assert Solution34().searchRange(nums=[5, 7, 7, 8, 8, 10], target=6) == [-1, -1]
+    assert Solution34().searchRange(nums=[], target=0) == [-1, -1]

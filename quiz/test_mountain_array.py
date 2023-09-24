@@ -85,7 +85,7 @@ class Solution1095:
 
 # 162. Find Peak Element
 # https://leetcode.com/problems/find-peak-element/description/
-class Solution:
+class Solution162:
     def findPeakElement(self, nums: list[int]) -> int:
         # binary search work because the conditions
         # 1. nums[-1] = nums[n] = -∞
@@ -104,7 +104,7 @@ class Solution:
 
 # 1901. Find a Peak Element II
 # https://leetcode.com/problems/find-a-peak-element-ii/description/
-class Solution:
+class Solution1901:
     def findPeakGrid(self, mat: list[list[int]]) -> list[int]:
         # because the conditions so we can use binary search
         # 1. no two adjacent cells are equal
