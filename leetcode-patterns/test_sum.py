@@ -1,3 +1,20 @@
+from collections import defaultdict
+
+
+# Find number of subarrays that fit an exact criteria
+def fn(arr, k):
+    counts = defaultdict(int)
+    counts[0] = 1
+    ans = curr = 0
+
+    for _num in arr:
+        # do logic to change curr
+        ans += counts[curr - k]
+        counts[curr] += 1
+
+    return ans
+
+
 # 1. Two Sum
 class Solution1:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
@@ -151,4 +168,5 @@ def test_18():
     assert sorted(result) == sorted([[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]])
 
     result = (sorted(ans) for ans in Solution18().fourSum(nums=[2, 2, 2, 2, 2], target=8))
+    assert sorted(result) == sorted([[2, 2, 2, 2]])
     assert sorted(result) == sorted([[2, 2, 2, 2]])

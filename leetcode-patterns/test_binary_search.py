@@ -171,3 +171,22 @@ class Solution450:
             root.right = self.deleteNode(root.right, key)
 
         return root
+
+
+# 700. Search in a Binary Search Tree
+class Solution700:
+    def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        def binary_search(root):
+            if root is None:
+                return None
+
+            if root.val == val:
+                return root
+
+            if root.val > val:
+                return binary_search(root.left)
+
+            if root.val < val:
+                return binary_search(root.right)
+
+        return binary_search(root)

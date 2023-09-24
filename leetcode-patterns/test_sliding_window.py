@@ -9,6 +9,24 @@ from collections import Counter, defaultdict
 # 862 Shortest Subarray with Sum at Least K
 # 209 Minimum Size Subarray Sum
 
+WINDOW_CONDITION_BROKEN = None
+
+
+# Sliding window
+def fn(arr):
+    left = ans = 0
+
+    for _right in range(len(arr)):
+        # do logic here to add arr[right] to curr
+
+        while WINDOW_CONDITION_BROKEN:
+            # remove arr[left] from curr
+            left += 1
+
+        # update ans
+
+    return ans
+
 
 def window_needs_shrink():
     pass
