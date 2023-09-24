@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, defaultdict
 
 # 1248 Count Number of Nice Subarrays
 # 1234 Replace the Substring for Balanced String
@@ -14,31 +14,26 @@ def window_needs_shrink():
     pass
 
 
-def sliding_window(s: str):
-    window = {}
+def sliding_window(s: str, t: str):
+    window = defaultdict(int)
+    need = defaultdict(int)
+    for c in t:
+        need[c] += 1
 
-    left = 0
-    right = 0
-
+    left, right = 0, 0
     while right < len(s):
         c = s[right]
-        if c not in window:
-            window[c] = 1
-        else:
-            window[c] += 1
-
         right += 1
 
         # update window
+        window[c] += 1
 
         while left < right and window_needs_shrink():
             d = s[left]
-
             left += 1
 
             # update window
-            if d in window:
-                window[d] -= 1
+            window[d] -= 1
 
 
 # 643. Maximum Average Subarray I
