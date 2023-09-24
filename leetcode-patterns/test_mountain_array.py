@@ -40,9 +40,17 @@ class Solution852:
 
 # 1095. Find in Mountain Array
 # https://leetcode.com/problems/find-in-mountain-array/description/
-# class MountainArray:
-#    def get(self, index: int) -> int:
-#    def length(self) -> int:
+class MountainArray:
+    def __init__(self, arr) -> None:
+        self.arr = arr.copy()
+
+    def get(self, index: int) -> int:
+        return self.arr[index]
+
+    def length(self) -> int:
+        return len(self.arr)
+
+
 class Solution1095:
     def findInMountainArray(self, target: int, mountain_arr: "MountainArray") -> int:
         # find peak
@@ -81,6 +89,12 @@ class Solution1095:
             else:
                 return mid
         return -1
+
+
+def test_1095():
+    assert Solution1095().findInMountainArray(3, MountainArray([1, 2, 3, 4, 5, 3, 1])) == 2
+    assert Solution1095().findInMountainArray(2, MountainArray([1, 5, 2])) == 2
+    assert Solution1095().findInMountainArray(2, MountainArray([3, 5, 3, 2, 0])) == 3
 
 
 # 162. Find Peak Element
