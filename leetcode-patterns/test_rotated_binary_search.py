@@ -31,8 +31,9 @@ class Solution33:
 
 
 def test_33():
-    assert Solution33().search([4, 5, 6, 7, 0, 1, 2], 0) == 4
-    assert Solution33().search([4, 5, 6, 7, 0, 1, 2], 3) == -1
+    assert Solution33().search(nums=[4, 5, 6, 7, 0, 1, 2], target=0) == 4
+    assert Solution33().search(nums=[4, 5, 6, 7, 0, 1, 2], target=3) == -1
+    assert Solution33().search(nums=[1], target=0) == -1
 
 
 # 81. Search in Rotated Sorted Array II
@@ -49,10 +50,6 @@ class Solution81:
 
             mid = left + (right - left) // 2
 
-            #           top
-            # left
-            #                           right
-            #               bottom
             if nums[mid] == target:
                 return True
             if nums[left] <= nums[mid]:  # in the left part
