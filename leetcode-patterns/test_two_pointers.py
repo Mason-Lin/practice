@@ -80,15 +80,15 @@ def test_11():
 class Solution1679:
     def maxOperations(self, nums: list[int], k: int) -> int:
         # time O(n) / space O(n)
-        seems = defaultdict(int)
+        exists = defaultdict(int)
         count = 0
         for num in nums:
-            looking = k - num
-            if seems[looking] > 0:
+            diff = k - num
+            if exists[diff] > 0:
                 count += 1
-                seems[looking] = max(0, seems[looking] - 1)
+                exists[diff] = max(0, exists[diff] - 1)
             else:
-                seems[num] += 1
+                exists[num] += 1
         return count
 
 
