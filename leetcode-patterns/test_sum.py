@@ -169,4 +169,3 @@ def test_18():
 
     result = (sorted(ans) for ans in Solution18().fourSum(nums=[2, 2, 2, 2, 2], target=8))
     assert sorted(result) == sorted([[2, 2, 2, 2]])
-    assert sorted(result) == sorted([[2, 2, 2, 2]])

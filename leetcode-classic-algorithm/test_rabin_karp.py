@@ -1,62 +1,67 @@
-# Following program is the python implementation of
-# Rabin Karp Algorithm given in CLRS book
+# rabin - karp
+# find smaller string in bigger string
 
-# d is the number of characters in the input alphabet
-d = 256
 
-# pat -> pattern
-# txt -> text
-# q -> A prime number
+def fn():
+    # Following program is the python implementation of
+    # Rabin Karp Algorithm given in CLRS book
 
-def search(pat, txt, q):
-    M = len(pat)
-    N = len(txt)
-    i = 0
-    j = 0
-    p = 0 # hash value for pattern
-    t = 0 # hash value for txt
-    h = 1
+    # d is the number of characters in the input alphabet
+    d = 256
 
-    # The value of h would be "pow(d, M-1)% q"
-    for i in xrange(M-1):
-        h = (h * d)% q
+    # pat -> pattern
+    # txt -> text
+    # q -> A prime number
 
-    # Calculate the hash value of pattern and first window
-    # of text
-    for i in xrange(M):
-        p = (d * p + ord(pat[i]))% q
-        t = (d * t + ord(txt[i]))% q
+    def search(pat, txt, q):
+        M = len(pat)
+        N = len(txt)
+        i = 0
+        j = 0
+        p = 0  # hash value for pattern
+        t = 0  # hash value for txt
+        h = 1
 
-    # Slide the pattern over text one by one
-    for i in xrange(N-M + 1):
-        # Check the hash values of current window of text and
-        # pattern if the hash values match then only check
-        # for characters one by one
-        if p == t:
-            # Check for characters one by one
-            for j in xrange(M):
-                if txt[i + j] != pat[j]:
-                    break
+        # The value of h would be "pow(d, M-1)% q"
+        for i in range(M - 1):
+            h = (h * d) % q
 
-            j+= 1
-            # if p == t and pat[0...M-1] = txt[i, i + 1, ...i + M-1]
-            if j == M:
-                print "Pattern found at index " + str(i)
+        # Calculate the hash value of pattern and first window
+        # of text
+        for i in range(M):
+            p = (d * p + ord(pat[i])) % q
+            t = (d * t + ord(txt[i])) % q
 
-        # Calculate hash value for next window of text: Remove
-        # leading digit, add trailing digit
-        if i < N-M:
-            t = (d*(t-ord(txt[i])*h) + ord(txt[i + M]))% q
+        # Slide the pattern over text one by one
+        for i in range(N - M + 1):
+            # Check the hash values of current window of text and
+            # pattern if the hash values match then only check
+            # for characters one by one
+            if p == t:
+                # Check for characters one by one
+                for j in range(M):
+                    if txt[i + j] != pat[j]:
+                        break
 
-            # We might get negative values of t, converting it to
-            # positive
-            if t < 0:
-                t = t + q
+                j += 1
+                # if p == t and pat[0...M-1] = txt[i, i + 1, ...i + M-1]
+                if j == M:
+                    print("Pattern found at index " + str(i))
 
-# Driver program to test the above function
-txt = "GEEKS FOR GEEKS"
-pat = "GEEK"
-q = 101 # A prime number
-search(pat, txt, q)
+            # Calculate hash value for next window of text: Remove
+            # leading digit, add trailing digit
+            if i < N - M:
+                t = (d * (t - ord(txt[i]) * h) + ord(txt[i + M])) % q
 
-# This code is contributed by Bhavya Jain
+                # We might get negative values of t, converting it to
+                # positive
+                if t < 0:
+                    t = t + q
+
+    # Driver program to test the above function
+    txt = "GEEKS FOR GEEKS"
+    pat = "GEEK"
+    q = 101  # A prime number
+    search(pat, txt, q)
+
+    # This code is contributed by Bhavya Jain
