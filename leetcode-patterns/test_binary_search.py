@@ -13,6 +13,17 @@ when to use it?
     for example, if condition(k) is True then condition(k + 1) is True, then we can consider binary search.
 """
 # https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems.
+# https://labuladong.github.io/algo/di-ling-zh-bfe1b/dong-ge-da-334dd/
+# https://labuladong.github.io/algo/di-ling-zh-bfe1b/wo-xie-le--3c789/
+from typing import Optional
+
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 
 def special_condition_passed(mid):
@@ -130,3 +141,33 @@ def test_three_kind():
 
     assert right_bound(search_space, 7) == -1
     assert right_bound(search_space, 3) == 4
+
+
+# 450. Delete Node in a BST
+
+
+class Solution450:
+    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+        if not root:
+            return None
+
+        if root.val == key:
+            if not root.right:
+                return root.left
+
+            if not root.left:
+                return root.right
+
+            if root.left and root.right:
+                temp = root.right
+                while temp.left:
+                    temp = temp.left
+                root.val = temp.val
+                root.right = self.deleteNode(root.right, root.val)
+
+        elif root.val > key:
+            root.left = self.deleteNode(root.left, key)
+        else:
+            root.right = self.deleteNode(root.right, key)
+
+        return root
