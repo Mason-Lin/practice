@@ -1,4 +1,3 @@
-# pylint: disable=C0200
 # 1. Two Sum
 class Solution1:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
@@ -8,20 +7,21 @@ class Solution1:
             if (target - num) not in exists:
                 exists[num] = i
             else:
-                return [i, exists[target-num]]
+                return [i, exists[target - num]]
+
 
 def test_1():
-    assert Solution1().twoSum(numbers = [2,7,11,15], target = 9) == [0,1]
-    assert Solution1().twoSum(numbers =[3,2,4], target = 6) == [1,2]
-    assert Solution1().twoSum(numbers =[3,3], target = 6) == [0,1]
+    assert Solution1().twoSum(nums=[2, 7, 11, 15], target=9) == [0, 1]
+    assert Solution1().twoSum(nums=[3, 2, 4], target=6) == [1, 2]
+    assert Solution1().twoSum(nums=[3, 3], target=6) == [0, 1]
 
 
 # 167. Two Sum II - Input Array Is Sorted
 class Solution167:
-    def twoSum(self, numbers: list[int], target: int) -> list[int]:
-        left, right = 0, len(numbers) - 1
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        left, right = 0, len(nums) - 1
         while left < right:
-            two_sum = numbers[left] + numbers[right]
+            two_sum = nums[left] + nums[right]
             if two_sum < target:
                 left += 1
             elif two_sum > target:
@@ -29,15 +29,15 @@ class Solution167:
             else:  # two_sum == target
                 return [left + 1, right + 1]
 
-def test_167():
-    assert Solution167().twoSum(numbers = [2,7,11,15], target = 9) == [1,2]
-    assert Solution167().twoSum(numbers = [2,3,4], target = 6) == [1,3]
-    assert Solution167().twoSum(numbers =[-1, 0], target=-1) == [1, 2]
 
+def test_167():
+    assert Solution167().twoSum(nums=[2, 7, 11, 15], target=9) == [1, 2]
+    assert Solution167().twoSum(nums=[2, 3, 4], target=6) == [1, 3]
+    assert Solution167().twoSum(nums=[-1, 0], target=-1) == [1, 2]
 
 
 # 15. 3Sum
-class Solution3sum:
+class Solution15:
     def threeSumTwoPointer(self, nums: list[int]) -> list[list[int]]:
         # two pointers
         nums.sort()
@@ -71,18 +71,19 @@ class Solution3sum:
 
 
 def test_15():
-    result = (sorted(ans) for ans in Solution15().fourSum(nums=[-1,0,1,2,-1,-4]))
-    assert sorted(result) == sorted([[-1,-1,2],[-1,0,1]])
+    result = (sorted(ans) for ans in Solution15().threeSumTwoPointer(nums=[-1, 0, 1, 2, -1, -4]))
+    assert sorted(result) == sorted([[-1, -1, 2], [-1, 0, 1]])
 
-    result = (sorted(ans) for ans in Solution15().fourSum(nums=[0,0,0]))
-    assert sorted(result) == sorted([[0,0,0]])
+    result = (sorted(ans) for ans in Solution15().threeSumTwoPointer(nums=[0, 0, 0]))
+    assert sorted(result) == sorted([[0, 0, 0]])
 
-    result = (sorted(ans) for ans in Solution15().fourSum(nums=[0,1,1]))
+    result = (sorted(ans) for ans in Solution15().threeSumTwoPointer(nums=[0, 1, 1]))
     assert sorted(result) == sorted([])
+
 
 # 16. 3Sum Closest
 class Solution16:
-    def threeSumClosest(self, nums: List[int], target: int) -> int:
+    def threeSumClosest(self, nums: list[int], target: int) -> int:
         # brute
         # nums.sort()
         # n = len(nums)
@@ -102,26 +103,26 @@ class Solution16:
         nums.sort()
         closest = nums[0] + nums[1] + nums[2]
         for i in range(len(nums) - 2):
-            j, k = i+1, len(nums) - 1
+            j, k = i + 1, len(nums) - 1
             while j < k:
                 s = nums[i] + nums[j] + nums[k]
                 if s == target:
                     return s
-                
+
                 if abs(s - target) < abs(closest - target):
                     closest = s
-                
+
                 if s < target:
                     j += 1
                 elif s > target:
                     k -= 1
-            
+
         return closest
 
-def test_16():
-    assert Solution18().fourSum(nums=[-1,2,1,-4], target = 1) == 2
-    assert Solution18().fourSum(nums=[0,0,0], target = 1) == 0
 
+def test_16():
+    assert Solution16().threeSumClosest(nums=[-1, 2, 1, -4], target=1) == 2
+    assert Solution16().threeSumClosest(nums=[0, 0, 0], target=1) == 0
 
 
 # 18. 4Sum
@@ -160,7 +161,6 @@ def test_it():
     result = (sorted(ans) for ans in Solution18().fourSum(nums=[1, 0, -1, 0, -2, 2], target=0))
     assert sorted(result) == sorted([[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]])
 
-    result = (sorted(ans) for ans in Solution18().fourSum(nums=[2,2,2,2,2], target=8))
-    assert sorted(result) == sorted([[2,2,2,2]])
-
-
+    result = (sorted(ans) for ans in Solution18().fourSum(nums=[2, 2, 2, 2, 2], target=8))
+    assert sorted(result) == sorted([[2, 2, 2, 2]])
+    assert sorted(result) == sorted([[2, 2, 2, 2]])
