@@ -1,3 +1,6 @@
+import itertools
+
+
 # Build a prefix sum
 def fn(arr):
     prefix = [arr[0]]
@@ -5,3 +8,7 @@ def fn(arr):
         prefix.append(prefix[-1] + arr[i])
 
     return prefix
+
+
+def bnt(arr):
+    return list(itertools.accumulate(arr))
