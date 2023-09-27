@@ -11,8 +11,13 @@ def find_largest_odd_integer(nums: list[int]) -> int:
     return maxi
 
 
+# -   k is bad name
+# -   return should be list or int?
+# -   allow to modify list in place?
+# -   i'm return smallest
+# -   should use builtin nlargest?
 def find_largest_odd_integer2(nums: list[int], k: int) -> int:
-    # maxi = -inf  # 9
+    maxi = -inf
     nums[:] = [-num for num in nums if num % 2 != 0]
     heapq.heapify(nums)
 
