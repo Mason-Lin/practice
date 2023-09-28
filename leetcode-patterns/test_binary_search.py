@@ -11,6 +11,10 @@ Design the condition function.
 when to use it?
     If we can discover some kind of monotonicity
     for example, if condition(k) is True then condition(k + 1) is True, then we can consider binary search.
+
+import bisect
+Python has a built in library function for binary search.
+Is it okay if I use it, or would you prefer for me to implement it?
 """
 # https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/solutions/777019/python-clear-explanation-powerful-ultimate-binary-search-template-solved-many-problems/
 # https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems.
