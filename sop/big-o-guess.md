@@ -79,6 +79,8 @@ You will very likely need to incorporate a hash map in some way.
 
 # find solution flowchart
 
+https://dev.to/arslan_ah/the-ultimate-strategy-to-preparing-for-the-coding-interview-3ace
+
 -   Pattern 1: If the given input is a sorted (array, list, or matrix), then we will be
     using a variation of Binary Search or a Two Pointers strategy
 -   Pattern 2: If we are dealing with top/maximum/minimum/closest 'k'
@@ -101,3 +103,56 @@ You will very likely need to incorporate a hash map in some way.
     the best data structure.
 -   Pattern 10: If the problem involves a LinkedList and we
     can't use extra space, then use Fast & Slow Pointer approach.
+
+# Tips
+
+## If input array is sorted then
+
+-   Binary search
+-   Two pointers
+
+## If asked for all permutations/subsets then
+
+-   Backtracking
+
+## If given a tree then
+
+-   DFS
+-   BFS
+
+## If given a graph then
+
+-   DFS
+-   BFS
+
+## If given a linked list then
+
+-   Two pointers
+
+## If recursion is banned then
+
+-   Stack
+
+## If must solve in-place then
+
+-   Swap corresponding values
+-   Store one or more different values in the same pointer
+
+## If asked for maximum/minimum subarray/subset/options then
+
+-   Dynamic programming
+
+## If asked for top/least K items then
+
+-   Heap
+-   QuickSelect
+
+## If asked for common strings then
+
+-   Map
+-   Trie
+
+## Else
+
+-   Map/Set for O(1) time & O(n) space
+-   Sort input for O(nlogn) time and O(1) space
