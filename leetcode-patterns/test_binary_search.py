@@ -188,3 +188,22 @@ def test_34():
     assert Solution34().searchRange(nums=[5, 7, 7, 8, 8, 10], target=8) == [3, 4]
     assert Solution34().searchRange(nums=[5, 7, 7, 8, 8, 10], target=6) == [-1, -1]
     assert Solution34().searchRange(nums=[], target=0) == [-1, -1]
+
+
+# 658. Find K Closest Elements
+class Solution658:
+    def findClosestElements(self, arr: list[int], k: int, x: int) -> list[int]:
+        left, right = 0, len(arr) - k
+        while left < right:
+            mid = left + (right - left) // 2
+            if x - arr[mid] <= arr[mid + k] - x:
+                right = mid
+            else:
+                left = mid + 1
+        return arr[left : left + k]
+
+
+def test_658():
+    assert Solution658().findClosestElements(arr=[1, 2, 3, 4, 5], k=4, x=3) == [1, 2, 3, 4]
+    assert Solution658().findClosestElements(arr=[1, 2, 3, 4, 5], k=4, x=-1) == [1, 2, 3, 4]
+    assert Solution658().findClosestElements(arr=[1, 1, 2, 2, 2, 2, 2, 3, 3], k=3, x=3) == [2, 3, 3]
