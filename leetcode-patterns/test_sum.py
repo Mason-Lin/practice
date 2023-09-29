@@ -77,11 +77,12 @@ class Solution15:
                 if total == target:
                     results.append((nums[i], nums[left], nums[right]))
                     left += 1
-                    right -= 1
                     while left < right and nums[left] == nums[left - 1]:
                         left += 1
-                    while left < right and nums[right] == nums[right + 1]:
-                        right -= 1
+                    # only need to increment left, the right will be decremented in the next iteration
+                    # right -= 1
+                    # while left < right and nums[right] == nums[right + 1]:
+                    #     right -= 1
                 elif total < target:
                     left += 1
                 else:
