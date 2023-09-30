@@ -1,7 +1,20 @@
-# https://hackmd.io/@meyr543/rkjS-x6wY
-# https://www.haogroot.com/2020/09/01/monotonic-stack-leetcode/
-# stack 存放index。因為存index有很多好處，其中之一就是可以算和target的差距。
-# 如果stack為empty則填入-1，也是有利計算差距。
+r"""重點整理
+stack 存放 index 有好處, 可以計算target的差距
+會建立另外一個查表用的 list, 用來存放答案, 並初始化為-1
+向右查找的時候, 從尾端開始建立stack
+向左查找的時候, 從頭開始建立stack
+找較大的元素, 用 Monotonic decreasing stack
+找較小的元素, 用 Monotonic increasing stack
+建立 Monotonic decreasing stack 的時候, 移除比新元素還要小的元素
+建立 Monotonic increasing stack 的時候, 移除比新元素還要大的元素.
+向左找較大  \          /  向右找較大
+decreasing  \        /   <- decreasing
+             \      /    從尾端開始建立stack
+              - Me -
+             /      \    從尾端開始建立stack
+increasing  /        \   <- increasing
+向左找較小  /          \  向右找較小.
+"""
 
 
 def example(nums: list[int]) -> list[int]:

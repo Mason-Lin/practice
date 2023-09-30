@@ -10,7 +10,7 @@ class ListNode:
 
 
 # Linked list: fast and slow pointer
-def fn(head):
+def fn1(head):
     slow = head
     fast = head
     ans = 0
@@ -24,7 +24,7 @@ def fn(head):
 
 
 # Reversing a linked list
-def fn(head):
+def fn2(head):
     curr = head
     prev = None
     while curr:
@@ -165,6 +165,7 @@ def copy_random_list(head: ListNode) -> Optional[ListNode]:
     return new_head
 
 
+# SC: stack space
 def merge_two_lists_rec(list1: ListNode, list2: ListNode) -> Optional[ListNode]:
     if list1 is None:
         return list2
@@ -172,9 +173,9 @@ def merge_two_lists_rec(list1: ListNode, list2: ListNode) -> Optional[ListNode]:
         return list1
 
     if list1.val < list2.val:
-        list1.next = merge_two_lists(list1.next, list2)
+        list1.next = merge_two_lists_rec(list1.next, list2)
         return list1
-    list2.next = merge_two_lists(list1, list2.next)
+    list2.next = merge_two_lists_rec(list1, list2.next)
     return list2
 
 
@@ -200,23 +201,62 @@ def remove_duplicates(head: ListNode) -> Optional[ListNode]:
 
 
 def merge_two_lists(list1: ListNode, list2: ListNode) -> Optional[ListNode]:
-    new_node = dummy = ListNode(-1)
-    node_1 = list1
-    node_2 = list2
+    cur = dummy = ListNode(-1)
 
-    while node_1 and node_2:
-        if node_1.val < node_2.val:
-            new_node.next = node_1
-            node_1 = node_1.next
+    while list1 and list2:
+        if list1.val < list2.val:
+            cur.next = list1
+            cur = cur.next
+            list1 = list1.next
         else:
-            new_node.next = node_2
-            node_2 = node_2.next
-        new_node = new_node.next
-    if node_1:
-        new_node.next = node_1
-    if node_2:
-        new_node.next = node_2
+            cur.next = list2
+            cur = cur.next
+            list2 = list2.next
+    if list1:
+        cur.next = list1
+    if list2:
+        cur.next = list2
     return dummy.next
+
+
+# 143. Reorder List
+class Solution143:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        """Do not return anything, modify head in-place instead."""
+        # find middle
+        slow, fast = head, head.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        # slow.next is the second half head
+
+        # reverse second half
+        second = slow.next
+        prev = slow.next = None
+        while second:
+            tmp = second.next
+            second.next = prev
+            prev = second
+            second = tmp
+        # prev is the second half head
+
+        # merge two halfs
+        first, second = head, prev
+        while second:
+            tmp1, tmp2 = first.next, second.next
+            first.next = second
+            second.next = tmp1
+            first, second = tmp1, tmp2
+
+
+def test_143():
+    linked_list = create_linked_list([1, 2, 3, 4])
+    Solution143().reorderList(linked_list)
+    assert linked_list_to_array(linked_list) == [1, 4, 2, 3]
+
+    linked_list = create_linked_list([1, 2, 3, 4, 5])
+    Solution143().reorderList(linked_list)
+    assert linked_list_to_array(linked_list) == [1, 5, 2, 4, 3]
 
 
 def test_linked_list():
