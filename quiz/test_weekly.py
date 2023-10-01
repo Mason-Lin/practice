@@ -1,4 +1,4 @@
-class Solution2871:
+class Solution2874:
     def maximumTripletValue(self, nums: list[int]) -> int:
         prev_biggest = [float("-inf")] * len(nums)
         post_biggest = [float("-inf")] * len(nums)
@@ -19,9 +19,9 @@ class Solution2871:
         return max(maximun, 0)
 
 
-def test_2871():
-    assert Solution2871().maximumTripletValue([6, 11, 12, 12, 7, 9, 2, 11, 12, 4, 19, 14, 16, 8, 16]) == 190
-    assert Solution2871().maximumTripletValue([10, 13, 6, 2]) == 14
+def test_2874():
+    assert Solution2874().maximumTripletValue([6, 11, 12, 12, 7, 9, 2, 11, 12, 4, 19, 14, 16, 8, 16]) == 190
+    assert Solution2874().maximumTripletValue([10, 13, 6, 2]) == 14
 
 
 class Solution2875:
