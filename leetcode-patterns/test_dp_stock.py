@@ -4,6 +4,15 @@
 # https://zhuanlan.zhihu.com/p/139368825
 
 
+# https://leetcode.com/problems/house-robber/solutions/156523/from-good-to-great-how-to-approach-most-of-dp-problems/
+# how to find dp solution?
+# Find recursive relation
+# Recursive (top-down)
+# Recursive + memo (top-down)
+# Iterative + memo (bottom-up)
+# Iterative + N variables (bottom-up)
+
+
 STATE_FOR_WHOLE_INPUT = None
 RECURRENCE_RELATION = None
 BASE_CASE = None
