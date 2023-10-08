@@ -2,7 +2,7 @@
 
 # 【背包九讲专题】 https://www.bilibili.com/video/BV1qt411Z7nE/?share_source=copy_web
 # https://zhuanlan.zhihu.com/p/139368825
-
+# https://www.cnblogs.com/satire/p/14149614.html
 
 # https://leetcode.com/problems/house-robber/solutions/156523/from-good-to-great-how-to-approach-most-of-dp-problems/
 # how to find dp solution?
