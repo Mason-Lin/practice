@@ -58,6 +58,24 @@ def test_next_greater_element():
     assert next_greater_element([1]) == [-1]
 
 
+def next_greater_element_forward(nums: list[int]) -> list[int]:
+    ans = [-1] * len(nums)
+    stack = []
+    for i in range(len(nums)):
+        while stack and nums[i] > nums[stack[-1]]:
+            ans[stack.pop()] = nums[i]
+        stack.append(i)
+    return ans
+
+
+def test_next_greater_element_forward():
+    assert next_greater_element_forward([3, 2, 1, 2, 3]) == [-1, 3, 2, 3, -1]
+    assert next_greater_element_forward([1, 2, 3, 2, 1]) == [2, 3, -1, -1, -1]
+    assert next_greater_element_forward([1, 2, 3, 4, 5]) == [2, 3, 4, 5, -1]
+    assert next_greater_element_forward([5, 4, 3, 2, 1]) == [-1, -1, -1, -1, -1]
+    assert next_greater_element_forward([1]) == [-1]
+
+
 # Monotonic increasing stack
 def next_smaller_element(nums: list[int]) -> list[int]:
     ans = [-1] * len(nums)
@@ -116,3 +134,31 @@ def test_previous_smaller_element():
     assert previous_smaller_element([1, 2, 3, 4, 5]) == [-1, 1, 2, 3, 4]
     assert previous_smaller_element([5, 4, 3, 2, 1]) == [-1, -1, -1, -1, -1]
     assert previous_smaller_element([1]) == [-1]
+
+
+# 496. Next Greater Element I
+class Solution496:
+    def nextGreaterElement(self, nums1: list[int], nums2: list[int]) -> list[int]:
+        stack = []
+        result = {}
+        for v in nums2:
+            while stack and v > stack[-1]:
+                result[stack.pop()] = v
+            stack.append(v)
+        return [result.get(v, -1) for v in nums1]
+
+
+# 503. Next Greater Element II
+class Solution503:
+    def nextGreaterElements(self, nums: list[int]) -> list[int]:
+        result = [-1] * len(nums)
+        stack = []
+        for i, v in enumerate(nums):
+            while stack and v > nums[stack[-1]]:
+                result[stack.pop()] = v
+            stack.append(i)
+
+        for i, v in enumerate(nums):
+            while stack and v > nums[stack[-1]]:
+                result[stack.pop()] = v
+        return result
