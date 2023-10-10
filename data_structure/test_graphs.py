@@ -1,4 +1,5 @@
 from collections import deque
+from typing import Optional
 
 
 class Graph1:
@@ -95,3 +96,58 @@ def test_grpah():
         if not discovered[i]:
             # start BFS traversal from vertex i
             bfs(graph, i, discovered)
+
+
+# 200. Number of Islands
+class Solution200:
+    def numIslands(self, grid: list[list[str]]) -> int:
+        ROWS = len(grid)
+        COLS = len(grid[0])
+        visited = set()
+
+        def clean_ones(row, col):
+            if row in range(ROWS) and col in range(COLS) and (row, col) not in visited:
+                visited.add((row, col))
+                if grid[row][col] == "1":
+                    grid[row][col] = "0"
+                    clean_ones(row + 1, col)
+                    clean_ones(row - 1, col)
+                    clean_ones(row, col + 1)
+                    clean_ones(row, col - 1)
+
+        island = 0
+        for r in range(ROWS):
+            for c in range(COLS):
+                if grid[r][c] == "1":
+                    island += 1
+                    clean_ones(r, c)
+        return island
+
+
+def test_200():
+    grid = [["1", "1", "1", "1", "0"], ["1", "1", "0", "1", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "0", "0", "0"]]
+    assert Solution200().numIslands(grid) == 1
+    grid = [["1", "1", "0", "0", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "1", "0", "0"], ["0", "0", "0", "1", "1"]]
+    assert Solution200().numIslands(grid) == 3
+
+
+# 133. Clone Graph
+class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+
+
+class Solution133:
+    def cloneGraph(self, node: Optional[Node]) -> Optional[Node]:
+        mapping = {}
+
+        def dfs(root):
+            if root:
+                if root not in mapping:
+                    mapping[root] = Node(root.val, [])
+                    for adj in root.neighbors:
+                        mapping[root].neighbors.append(dfs(adj))
+                return mapping[root]
+
+        return dfs(node)
