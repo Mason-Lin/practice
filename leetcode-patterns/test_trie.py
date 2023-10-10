@@ -62,3 +62,47 @@ class Trie:
 # obj.insert(word)
 # param_2 = obj.search(word)
 # param_3 = obj.startsWith(prefix)
+
+
+# 211. Design Add and Search Words Data Structure
+class TrieNode:
+    def __init__(self):
+        self.word = False
+        self.children = {}
+
+
+class WordDictionary:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def addWord(self, word: str) -> None:
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.word = True
+
+    def dfs(self, node, word, index):
+        if index == len(word):
+            return node.word
+        if word[index] == ".":
+            return any(self.dfs(child, word, index + 1) for child in node.children.values())
+        node = node.children.get(word[index])
+        if not node:
+            return False
+        return self.dfs(node, word, index + 1)
+
+    def search(self, word: str) -> bool:
+        return self.dfs(self.root, word, 0)
+
+
+def test_211():
+    w = WordDictionary()
+    w.addWord("bad")
+    w.addWord("dad")
+    w.addWord("mad")
+    assert w.search("pad") is False
+    assert w.search("bad") is True
+    assert w.search(".ad") is True
+    assert w.search("b..") is True
