@@ -383,3 +383,21 @@ class LRUCache2:
             lru = self.left.next
             self.remove(lru)
             del self.cache[lru.key]
+
+
+# 138. Copy List with Random Pointer
+class Solution138:
+    def copyRandomList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        mapping = {None: None}
+        curr = head
+        while curr:
+            clone = ListNode(curr.val)
+            mapping[curr] = clone
+            curr = curr.next
+        curr = head
+        while curr:
+            clone = mapping[curr]
+            clone.next = mapping[curr.next]
+            clone.random = mapping[curr.random]
+            curr = curr.next
+        return mapping[head]
