@@ -151,3 +151,47 @@ class Solution133:
                 return mapping[root]
 
         return dfs(node)
+
+
+# 79. Word Search
+class Solution79:
+    def exist(self, board: list[list[str]], word: str) -> bool:
+        ROWS, COLS = len(board), len(board[0])
+        length = len(word)
+        visited = set()
+
+        def backtracking(row: int, col: int, index: int) -> bool:
+            if length == index:
+                return True
+            if not (0 <= row < ROWS) or not (0 <= col < COLS) or word[index] != board[row][col] or (row, col) in visited:
+                return False
+
+            # up, down, left, right
+            index += 1
+            visited.add((row, col))
+            match = (
+                backtracking(row + 1, col, index)
+                or backtracking(row - 1, col, index)
+                or backtracking(row, col + 1, index)
+                or backtracking(row, col - 1, index)
+            )
+            visited.remove((row, col))
+            return match
+
+        for r in range(ROWS):
+            for c in range(COLS):
+                if backtracking(r, c, 0):
+                    return True
+        return False
+
+
+def test_79():
+    board = [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]]
+    word = "ABCCED"
+    assert Solution79().exist(board, word) is True
+    board = [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]]
+    word = "SEE"
+    assert Solution79().exist(board, word) is True
+    board = [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]]
+    word = "ABCB"
+    assert Solution79().exist(board, word) is False
