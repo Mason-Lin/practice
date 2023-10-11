@@ -1,14 +1,5 @@
 from collections import Counter, defaultdict
 
-# 1248 Count Number of Nice Subarrays
-# 1234 Replace the Substring for Balanced String
-# 1004 Max Consecutive Ones III
-# 930 Binary Subarrays With Sum
-# 992 Subarrays with K Different Integers
-# 904 Fruit Into Baskets
-# 862 Shortest Subarray with Sum at Least K
-# 209 Minimum Size Subarray Sum
-
 WINDOW_CONDITION_BROKEN = None
 
 
@@ -187,3 +178,98 @@ def test_1493():
     assert Solution1493().longestSubarray(nums=[1, 1, 0, 1]) == 3
     assert Solution1493().longestSubarray(nums=[0, 1, 1, 1, 0, 1, 1, 0, 1]) == 5
     assert Solution1493().longestSubarray(nums=[1, 1, 1]) == 2
+
+
+# 1358 Number of Substrings Containing All Three Characters
+class Solution1358:
+    def numberOfSubstrings(self, s: str) -> int:
+        left = 0
+        window = {c: 0 for c in "abc"}
+        res = 0
+        for right in range(len(s)):
+            window[s[right]] += 1
+            while all(window.values()):
+                window[s[left]] -= 1
+                left += 1
+            res += left
+        return res
+
+
+# 1248 Count Number of Nice Subarrays
+class Solution1248:
+    def numberOfSubarrays(self, nums: list[int], k: int) -> int:
+        left = 0
+        odd = 0
+        count = 0
+        total = 0
+        for right in range(len(nums)):
+            if nums[right] % 2:
+                odd += 1
+                count = 0
+            while odd == k:
+                if nums[left] % 2:
+                    odd -= 1
+                left += 1
+                count += 1
+            total += count
+        return total
+
+
+# 1234 Replace the Substring for Balanced String
+# https://leetcode.com/problems/replace-the-substring-for-balanced-string/solutions/408978/javacpython-sliding-window/comments/367697/
+# 1004 Max Consecutive Ones III
+class Solution1004:
+    def longestOnes(self, nums: list[int], k: int) -> int:
+        left = 0
+        window = Counter()
+        longest = 0
+        for right in range(len(nums)):
+            window[nums[right]] += 1
+
+            while window[0] > k:
+                window[nums[left]] -= 1
+                left += 1
+            longest = max(longest, right - left + 1)
+        return longest
+
+
+# 930 Binary Subarrays With Sum
+# https://leetcode.com/problems/binary-subarrays-with-sum/solutions/186683/c-java-python-sliding-window-o-1-space/
+# 992 HARD Subarrays with K Different Integers
+# https://leetcode.com/problems/subarrays-with-k-different-integers/solutions/523136/JavaC++Python-Sliding-Window/
+# 904 Fruit Into Baskets
+class Solution904:
+    def totalFruit(self, fruits: list[int]) -> int:
+        window = Counter()
+        maximum_total = float("-inf")
+        left = 0
+        for right in range(len(fruits)):
+            window[fruits[right]] += 1
+
+            while len(window.keys()) > 2:
+                window[fruits[left]] -= 1
+                if window[fruits[left]] == 0:
+                    del window[fruits[left]]
+                left += 1
+
+            total = sum(window.values())
+            maximum_total = max(maximum_total, total)
+        return maximum_total
+
+
+# 862 HARD Shortest Subarray with Sum at Least K
+# https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/solutions/143726/c-java-python-o-n-using-deque/
+
+
+# 209 Minimum Size Subarray Sum
+class Solution209:
+    def minSubArrayLen(self, target: int, nums: list[int]) -> int:
+        window, left = 0, 0
+        res = len(nums) + 1
+        for right in range(len(nums)):
+            window += nums[right]
+            while window >= target:
+                res = min(res, right - left + 1)
+                window -= nums[left]
+                left += 1
+        return res if res != (n + 1) else 0
