@@ -17,7 +17,20 @@ def bfs(head: Node):
     queue.append(head)
     result = []
     while queue:
-        node = queue.popleft()
+        for _i in range(len(queue)):
+            node = queue.popleft()
+            result.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+    return result
+
+
+def bfs_list(head: Node):
+    queue = [head]
+    result = []
+    for node in queue:
         result.append(node.val)
         if node.left:
             queue.append(node.left)
@@ -45,3 +58,4 @@ def test_it():
 
     # BFS traversal
     assert bfs(head) == [0, 1, 2, 3, 4, 5, 6]
+    assert bfs_list(head) == [0, 1, 2, 3, 4, 5, 6]
