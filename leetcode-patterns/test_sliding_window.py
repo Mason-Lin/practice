@@ -278,20 +278,16 @@ class Solution209:
 # 424. Longest Repeating Character Replacement
 class Solution424:
     def characterReplacement(self, s: str, k: int) -> int:
-        window = Counter()
-        max_freq = float("-inf")
-        longest = float("-inf")
         left = 0
+        ans = 0
+        window = Counter()
         for right in range(len(s)):
             window[s[right]] += 1
-            max_freq = max(max_freq, window[s[right]])
-
-            while (right - left + 1) - max_freq > k:
+            while (right - left + 1) - window.most_common()[0][1] > k:
                 window[s[left]] -= 1
-                # why not update max_freq? it won't impact the ans
                 left += 1
-            longest = max(longest, right - left + 1)
-        return longest
+            ans = max(ans, right - left + 1)
+        return ans
 
 
 # 567. Permutation in String
