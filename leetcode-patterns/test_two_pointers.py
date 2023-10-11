@@ -188,4 +188,20 @@ class Solution83:
 
 
 # 5. Longest Palindromic Substring
-# 5. Longest Palindromic Substring
+class Solution5:
+    def longestPalindrome(self, s: str) -> str:
+        def search(left, right):
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            return s[left + 1 : right]
+
+        longest = ""
+        for i in range(len(s)):
+            result = search(i, i)
+            if len(longest) < len(result):
+                longest = result
+            result = search(i, i + 1)
+            if len(longest) < len(result):
+                longest = result
+        return longest
