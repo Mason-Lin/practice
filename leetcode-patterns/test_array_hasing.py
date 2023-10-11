@@ -33,6 +33,3 @@ def test_36():
         [".", ".", ".", ".", "8", ".", ".", "7", "9"],
     ]
     assert Solution36().isValidSudoku(board) is True
-
-
-test_36()
