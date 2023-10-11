@@ -273,3 +273,55 @@ class Solution209:
                 window -= nums[left]
                 left += 1
         return res if res != (n + 1) else 0
+
+
+# 424. Longest Repeating Character Replacement
+class Solution424:
+    def characterReplacement(self, s: str, k: int) -> int:
+        window = Counter()
+        max_freq = float("-inf")
+        longest = float("-inf")
+        left = 0
+        for right in range(len(s)):
+            window[s[right]] += 1
+            max_freq = max(max_freq, window[s[right]])
+
+            while (right - left + 1) - max_freq > k:
+                window[s[left]] -= 1
+                # why not update max_freq? it won't impact the ans
+                left += 1
+            longest = max(longest, right - left + 1)
+        return longest
+
+
+# 567. Permutation in String
+class Solution567:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        target = Counter(s1)
+        window = Counter()
+        left = 0
+        for right in range(len(s2)):
+            window[s2[right]] += 1
+            if right >= len(s1):
+                window[s2[left]] -= 1
+                if window[s2[left]] == 0:
+                    del window[s2[left]]
+                left += 1
+
+            if window == target:
+                return True
+        return False
+
+
+# 121. Best Time to Buy and Sell Stock
+class Solution121:
+    def maxProfit(self, prices: list[int]) -> int:
+        max_profit = 0
+        left = 0
+        for right in range(1, len(prices)):
+            if prices[right] > prices[left]:
+                profit = prices[right] - prices[left]
+                max_profit = max(max_profit, profit)
+            else:
+                left = right
+        return max_profit
