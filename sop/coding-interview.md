@@ -45,7 +45,7 @@ Of course you are not looking for this brute force implementation, this can be o
 繼續大聲思考並與面試官交談。這使他們更容易給您提示。
 should I start implement it in code or you want me to continue to optimize it?
 //check null, May I skip these checks to save time?
-sorry I will keep the variable names short just for convenience, In real code I will sure use more descriptive names
+May I keep the variable names short just for convenience when coding in google doc? In real code I will use more descriptive names
 
 # 第五階段：測試和調試 (主動檢查與測試)
 
