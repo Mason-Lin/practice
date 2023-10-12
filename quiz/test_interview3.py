@@ -35,7 +35,7 @@ def palindromic(s: str) -> str:
     if cnt == 1:  # 沒有考慮到這個情況, 直接塞進去
         output.append(odd_char * odd_freq)
     for char, freq in counter.items():
-        if not freq % 2:
+        if not freq % 2:  # 這邊寫反了!!
             for _ in range(freq // 2):
                 output.append(char)
                 output.appendleft(char)
