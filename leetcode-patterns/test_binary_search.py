@@ -20,6 +20,7 @@ Is it okay if I use it, or would you prefer for me to implement it?
 # https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems.
 # https://labuladong.github.io/algo/di-ling-zh-bfe1b/dong-ge-da-334dd/
 # https://labuladong.github.io/algo/di-ling-zh-bfe1b/wo-xie-le--3c789/
+import bisect
 from typing import Optional
 
 
