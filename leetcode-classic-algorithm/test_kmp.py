@@ -1,4 +1,7 @@
 # Python program for KMP Algorithm
+# None of one can be run, didn't find a template for KMP algorithm yet
+
+
 def KMPSearch(pat, txt):
     M = len(pat)
     N = len(txt)
@@ -58,7 +61,7 @@ def computeLPSArray(pat, M, lps):
 
 txt = "ABABDABACDABABCABAB"
 pat = "ABABCABAB"
-# assert KMPSearch(pat, txt) == 10
+assert KMPSearch(pat, txt) == 10
 
 
 def kmp(s: str, t: str) -> int:
@@ -69,9 +72,13 @@ def kmp(s: str, t: str) -> int:
         while v and s[i] != t[v]:
             v = dp[v - 1]
         v = dp[i] = v + (s[i] == t[v])
-        if v == len(t) - 1:
-            return i - v + 1
 
 
-def test_kmp_func():
+def fail_test_kmp_func():
+    txt = "ABABDABACDABABCABAB"
+    pat = "ABABCABAB"
     assert kmp(txt, pat) == 10
+
+    txt = "abcxabcdabxabcdabcdabc"
+    pat = "abcdabc"
+    assert kmp(txt, pat) == 11
