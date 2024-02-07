@@ -32,23 +32,23 @@ def KMPSearch(pat, txt):
 
 
 def computeLPSArray(pat, M, lps):
-    len = 0  # length of the previous longest prefix suffix
+    length = 0  # length of the previous longest prefix suffix
 
     lps[0]  # lps[0] is always 0
     i = 1
 
     # the loop calculates lps[i] for i = 1 to M-1
     while i < M:
-        if pat[i] == pat[len]:
-            len += 1
-            lps[i] = len
+        if pat[i] == pat[length]:
+            length += 1
+            lps[i] = length
             i += 1
         else:
             # This is tricky. Consider the example.
             # AAACAAAA and i = 7. The idea is similar
             # to search step.
-            if len != 0:
-                len = lps[len - 1]
+            if length != 0:
+                length = lps[length - 1]
 
                 # Also, note that we do not increment i here
             else:
@@ -58,6 +58,20 @@ def computeLPSArray(pat, M, lps):
 
 txt = "ABABDABACDABABCABAB"
 pat = "ABABCABAB"
-KMPSearch(pat, txt)
+# assert KMPSearch(pat, txt) == 10
 
-# This code is contributed by Bhavya Jain
+
+def kmp(s: str, t: str) -> int:
+    n = len(s)
+    dp = [0] * n
+    v = 0
+    for i in range(1, n):
+        while v and s[i] != t[v]:
+            v = dp[v - 1]
+        v = dp[i] = v + (s[i] == t[v])
+        if v == len(t) - 1:
+            return i - v + 1
+
+
+def test_kmp_func():
+    assert kmp(txt, pat) == 10
