@@ -52,7 +52,6 @@ def mason_counting_sort(nums):
     counter = Counter(nums)
     for i in range(min(nums), max(nums) + 1):
         counter[i] += counter[i - 1]
-
     result = [0] * len(nums)
     for num in reversed(nums):
         counter[num] -= 1
