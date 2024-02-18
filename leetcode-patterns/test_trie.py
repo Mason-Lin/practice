@@ -24,7 +24,7 @@ def fn(words):
 # 208. Implement Trie (Prefix Tree)
 class TrieNode:
     def __init__(self):
-        self.is_end_of_word = False
+        self.word = False
         self.children = {}
 
 
@@ -38,7 +38,7 @@ class Trie:
             if c not in node.children:
                 node.children[c] = TrieNode()
             node = node.children[c]
-        node.is_end_of_word = True
+        node.word = True
 
     def search(self, word: str) -> bool:
         node = self.root
@@ -46,7 +46,7 @@ class Trie:
             if c not in node.children:
                 return False
             node = node.children[c]
-        return node.is_end_of_word
+        return node.word
 
     def startsWith(self, prefix: str) -> bool:
         node = self.root
